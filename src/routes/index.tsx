@@ -1,10 +1,10 @@
-import AdminLayout from "@/layouts/AdminLayout";
+import MainLayout from "@/layouts/MainLayout";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <AdminLayout />
+        element: <MainLayout />
     }
 ])
 
