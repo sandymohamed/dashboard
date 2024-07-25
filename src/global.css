@@ -4,33 +4,56 @@
   box-sizing: border-box;
 }
 
-.container {
-  min-height: 100dvh;
-  display: grid;
-  grid-template-areas:
-    "nav head"
-    "nav content";
-  grid-template-rows: 50px 1fr;
-  grid-template-columns: 160px 1fr;
-  font-family: "Tajawal", sans-serif;
-  font-weight: 400;
+html {
+  font-size: 62.5%; /* 1rem = 10px */
 }
 
-.header {
-  grid-area: head;
-  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.08);
-  padding-block: 0.5rem;
+body {
+  overflow-x: hidden;
+}
+
+button,
+input {
+  outline: none;
+  border: none;
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+  font-size: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  width: fit-content; 
+}
+
+:root {
+  --main-color: #1C8A44;
+}
+
+.container {
+  min-height: 100dvh;
+  font-family: "Tajawal", sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 1.5;
 }
 
 .sidebar {
   grid-area: nav;
   background-image: linear-gradient(180deg, #4CAD7F 0.86%, #1C8A44 101.37%);
-  padding: 2rem 0.25rem;
+  padding: 3.2rem 0.4rem;
 }   
 
 .content {
   grid-area: content;
-  padding: 2rem;
+  padding: 3.2rem;
 }
 
 .logo {
@@ -38,3 +61,43 @@
   margin-inline: auto;
 }
 
+a.active {
+  background-color: #FFB72B;
+  border-radius: 0.8rem;
+}
+
+.error {
+  font-weight: 700;
+  color: red; 
+}
+
+.css-r40f8v-MuiTypography-root,
+.css-10hburv-MuiTypography-root {
+  font-size: 1.6rem !important;
+  font-family: inherit !important;
+}
+
+.MuiTelInput-IconButton {
+  background-color: transparent !important;
+}
+
+.css-1wc848c-MuiFormHelperText-root {
+  color: #d32f2f  !important;
+  font-size: 1.8rem !important;
+  font-family: inherit  !important;
+  font-weight: 700  !important;
+  margin-top: 1rem  !important;
+  text-align: right !important;
+
+}
+
+.css-1o9s3wi-MuiInputBase-input-MuiOutlinedInput-input {
+  height: auto !important;
+  font-size: 2rem !important;
+  box-sizing: border-box !important;
+}
+
+.css-1q6at85-MuiInputBase-root-MuiOutlinedInput-root {
+  direction: ltr;
+  padding-block: 0.5rem;
+}

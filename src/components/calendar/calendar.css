@@ -1,0 +1,46 @@
+.calendar_container {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.fc .fc-daygrid-day-frame {
+  position: relative;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.fc .fc-daygrid-body-natural .fc-daygrid-day-events {
+  flex: 1;
+  margin: 0;
+}
+
+.fc .fc-daygrid-day-top {
+  flex-direction: row;
+}
+
+.fc .fc-daygrid-event-harness {
+  height: 100%;
+}
+
+.my-custom-event,
+.fc-event-main {
+  background-color: #FFE6CE;
+  color: #FAA15D;
+  border: none;
+  border-right: 4px solid #EE7214;
+  padding: 1rem 0.5rem;
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start {
+  margin: 0;
+}
+
+.fc-daygrid-dot-event:hover {
+  background-color: #FFE6CE;
+}

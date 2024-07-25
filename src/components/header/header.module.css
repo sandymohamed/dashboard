@@ -1,0 +1,32 @@
+.header {
+  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.08);
+  padding-block: 0.5rem;
+  height: 4.8rem;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  margin-inline: auto;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.btn {
+  padding: 6px;
+  border-radius: 4px;
+  background-color: #e8fcf1;
+  font-weight: 700;
+  color: #1c8a44;
+  font-size: 16px;
+}
+
+.badge {
+  
+}
