@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <header className={header}>
       <section className={wrapper}>
-        <MenuIcon />
+        {/* <MenuIcon /> */}
         <div className={box}>
           <button className={btn}>En</button>
           <div>

@@ -12,19 +12,13 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { actAuthLogin, actGoogleLogin } from "@/store/auth/authSlice";
 import { GoogleLogin } from "@react-oauth/google";
 const Login = () => {
-
   const { loading, error } = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
-  const {
-    loginBox,
-    loginWithBox,
-    actionsBox,
-    hide,
-  } = styles;
+  const { loginBox, loginWithBox, actionsBox, hide } = styles;
 
   const {
     handleSubmit,
@@ -39,12 +33,15 @@ const Login = () => {
     dispatch(actAuthLogin(data))
       .unwrap()
       .then((data) => {
-        if (data.user.phone === "None") {
-         navigate("/set-phoneNumber")
-         return;
+        if (data.set_password_url) {
+          navigate(`/set-password`);
+        } else {
+          if (data.user?.phone === "None") {
+            navigate("/set-phoneNumber");
+            return;
+          }
+          navigate(`/${data.user?.user_type.toLowerCase()}`, { replace: true });
         }
-
-        navigate("/home");
       });
   };
 
@@ -52,13 +49,13 @@ const Login = () => {
     dispatch(actGoogleLogin(credential))
       .unwrap()
       .then((data) => {
-        console.log('google login response', data);
+        console.log("google login response", data);
         if (data.phone === "None") {
-         navigate("/set-phoneNumber")
-         return;
+          navigate("/set-phoneNumber");
+          return;
         }
 
-        navigate("/home");
+        navigate(`/Admin`);
       });
   };
 

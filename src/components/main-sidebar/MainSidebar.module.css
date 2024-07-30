@@ -1,0 +1,40 @@
+.sidebar {
+  grid-area: nav;
+  background-image: linear-gradient(180deg, #4CAD7F 0.86%, #1C8A44 101.37%);
+  padding: 3.2rem 0.4rem;
+}  
+
+@media (max-width: 991px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+.logo {
+  display: block;
+  margin-inline: auto;
+}
+
+.sidebar section {
+  padding: 3.2rem 1.6rem 0;
+}
+
+.sidebar menu {
+  color: #fff;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.sidebar menu:first-of-type {
+  padding-bottom: 2.4rem;
+  margin-bottom: 2.4rem;
+  border-bottom: 1px solid #EBEBEB;
+}
+
+.sidebar menu a {
+  padding: 1rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

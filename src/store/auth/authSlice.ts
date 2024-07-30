@@ -1,8 +1,9 @@
-import { TLoading } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 import actAuthLogin from "./act/actAuthLogin";
 import actGoogleLogin from "./act/actGoogleLogin";
 import { isString } from "@/types/gurads";
+import { TLoading } from "@/types/shared";
+import actSetPassword from "./act/actSetPassword";
 
 type TAuthState = {
   user: {
@@ -15,6 +16,7 @@ type TAuthState = {
   } | null;
   loading: TLoading;
   error: string | null;
+  modified_email?: string;
 };
 
 const initialState: TAuthState = {
@@ -38,8 +40,10 @@ const authSlice = createSlice({
       state.error = null;
     });
     builder.addCase(actAuthLogin.fulfilled, (state, action) => {
+      console.log("payload", action.payload);
       state.loading = "succeeded";
       state.user = action.payload.user;
+      state.modified_email = action.payload.modified_email;
     });
     builder.addCase(actAuthLogin.rejected, (state, action) => {
       state.loading = "failed";
@@ -60,7 +64,7 @@ const authSlice = createSlice({
         first_name: action.payload.first_name,
         last_name: action.payload.last_name,
         token: action.payload.token,
-      }
+      };
     });
     builder.addCase(actGoogleLogin.rejected, (state, action) => {
       state.loading = "failed";
@@ -68,11 +72,28 @@ const authSlice = createSlice({
         state.error = action.payload;
       }
     });
+
+    // Set New_Password
+    builder.addCase(actSetPassword.pending, (state) => {
+      state.loading = "pending";
+      state.error = null;
+    });
+    builder.addCase(actSetPassword.fulfilled, (state, action) => {
+      state.loading = "succeeded";
+      state.user = action.payload.user;
+    });
+    builder.addCase(actSetPassword.rejected, (state, action) => {
+      state.loading = "failed";
+      if (isString(action.payload)) {
+        state.error = action.payload;
+      }
+    });
   },
+
 });
 
 export const { logout } = authSlice.actions;
 
-export { actAuthLogin, actGoogleLogin };
+export { actAuthLogin, actGoogleLogin, actSetPassword };
 
 export default authSlice.reducer;

@@ -2,6 +2,7 @@
   box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.08);
   padding-block: 0.5rem;
   height: 4.8rem;
+  grid-area: head;
 }
 
 .wrapper {
@@ -16,6 +17,7 @@
   display: flex;
   align-items: center;
   gap: 1.5rem;
+  margin-right: auto
 }
 
 .btn {
@@ -25,8 +27,4 @@
   font-weight: 700;
   color: #1c8a44;
   font-size: 16px;
-}
-
-.badge {
-  
 }

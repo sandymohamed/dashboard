@@ -1,0 +1,60 @@
+.mini_calendar {
+  margin-bottom: 20px;
+}
+
+.mini_calendar header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.mini_calendar button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 5px;
+  gap: 1rem;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-content: center;
+  gap: 5px;
+}
+
+.day {
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.active {
+  background-color: #FFB72B;
+  color: #171717;
+}
+
+.other_month {
+  color: #ccc;
+}
+
+.time {
+  display: flex;
+  gap: 0.5rem;
+}

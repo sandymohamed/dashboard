@@ -9,7 +9,7 @@ const LoginSchema = z.object({
   password: z
     .string()
     .trim()
-    .min(1, "برجاء ادخال كلمة المرور"),
+    .optional()
 });
 
 export type TFormData = z.infer<typeof LoginSchema>;
