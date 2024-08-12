@@ -14,13 +14,14 @@ import { TFirstDayOfWeek } from "@/types/shared";
 import MiniCalendar from "./mini-calendar/MiniCalendar";
 import "./Sidebar.css";
 import { TEvent } from "../Calendar";
+import { useAppSelector } from "@/store/hooks";
 
 type TSidebarProps = {
   currentDate: Date;
   onDateChange: (date: Date) => void;
   firstDayOfWeek: TFirstDayOfWeek;
   clickedEvent: DateClickArg | null;
-  events: TEvent[];
+  events: TEvent[] | null;
 };
 
 const Sidebar = ({
@@ -28,9 +29,11 @@ const Sidebar = ({
   onDateChange,
   firstDayOfWeek,
   clickedEvent,
-  events,
+  events
 }: TSidebarProps) => {
   const getDaysInMonth = (date: Date) => {
+
+
     const start = startOfWeek(startOfMonth(date), {
       weekStartsOn: firstDayOfWeek,
     });
@@ -45,11 +48,15 @@ const Sidebar = ({
         firstDayOfWeek={1}
         onDateChange={onDateChange}
         getDaysInMonth={getDaysInMonth}
+        events={events}
       />
       <div className="daily-schedule">
-        {events.map((event) => {
+        {events && events.map((event) => {
           const eventDate = new Date(event.start);
-          if (clickedEvent && isSameDay(eventDate, clickedEvent.date) || isToday(eventDate)) {
+          if (
+            (clickedEvent && isSameDay(eventDate, clickedEvent.date)) ||
+            isToday(eventDate)
+          ) {
             return (
               <div key={event.title} className="event">
                 <div className="time">

@@ -31,7 +31,7 @@
 
 /* ================ Events ================ */
 .my-custom-event {
-  background-color: #ffe6ce;
+  /* background-color: #ffe6ce; */
   color: #faa15d;
   border: none;
   border-right: 4px solid #ee7214;
@@ -44,7 +44,7 @@
 
 
 .fc-daygrid-day-events td {
-  background-color: #F4FFF9;
+  /* background-color: #F4FFF9; */
 }
 
 .fc-v-event .fc-event-main {
@@ -83,9 +83,9 @@
 }
 
 /* ================ Today ================ */
-.fc .fc-daygrid-day.fc-day-today {
+/* .fc .fc-daygrid-day.fc-day-today {
   background-color: transparent
-}
+} */
 
 .fc-daygrid-day-bg {
   background-color: #f4fff9;

@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/store/hooks";
-import { TUser } from "@/types/shared";
+import { TUserRole } from "@/types/shared";
 import React from "react";
 import { Navigate} from "react-router-dom";
 
@@ -7,13 +7,13 @@ const ProtectedRoute = ({
   allowedTypes,
   children,
 }: {
-  allowedTypes: TUser[];
+  allowedTypes: TUserRole[];
   children: React.ReactNode;
 }) => {
 
-  const { user_type } = useAppSelector((state) => state.auth.user);
+  const { user } = useAppSelector((state) => state.auth);
 
-  if (allowedTypes.includes(user_type)) {
+  if (allowedTypes.includes(user?.user_type)) {
     return children;
   } else {
     return <Navigate to="/" replace />;

@@ -1,0 +1,57 @@
+.row {
+  display: flex;
+  gap: 1.6rem;
+}
+
+.row:not(:last-of-type) {
+  margin-bottom: 3.2rem;
+}
+
+.group {
+  flex: 1;
+  display: grid;
+  gap: 0.8rem;
+  position: relative;
+}
+
+.group label {
+  color: var(--gray-color);
+}
+
+.group input {
+  padding: 1.2rem 1.6rem;
+  border-radius: 0.4rem;
+  border: 1.5px solid #b5b7c0;
+  outline: none;
+  font-size: 1.6rem;
+  color: var(--primary-color);
+}
+
+.group input[type="tel"] {
+  text-align: right;
+}
+
+.form button[type="submit"] {
+  background-color: var(--main-color);
+  color: #fff;
+  padding: 1.2rem 1.6rem;
+  border-radius: 0.8rem;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-top: 3.2rem;
+  min-width: 12.8rem;
+  text-align: center;
+}
+
+.icon {
+  position: absolute;
+  left: 1rem;
+  bottom: 1.3rem;
+}
+
+.content {
+  margin-block: 3.2rem;
+  padding: 3.2rem;
+  box-shadow: 0px 4px 20px 0px #0000001A;
+  border-radius: 1.6rem;
+}

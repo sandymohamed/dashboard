@@ -1,13 +1,13 @@
 .sidebar {
-  grid-area: nav;
   background-image: linear-gradient(180deg, #4CAD7F 0.86%, #1C8A44 101.37%);
   padding: 3.2rem 0.4rem;
 }  
 
-@media (max-width: 991px) {
-  .sidebar {
-    display: none;
-  }
+.arrow {
+  cursor: pointer;
+  position: absolute;
+  left: -16px;
+  top: 0;
 }
 
 .logo {
@@ -17,6 +17,7 @@
 
 .sidebar section {
   padding: 3.2rem 1.6rem 0;
+  position: relative;
 }
 
 .sidebar menu {
@@ -37,4 +38,13 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+.sidebar menu a span {
+  flex: 1;
+  white-space: nowrap;
+}
+
+.sidebar menu a span.collapse {
+  display: none;
 }

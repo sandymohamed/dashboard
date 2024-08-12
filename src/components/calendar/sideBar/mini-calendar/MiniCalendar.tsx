@@ -3,12 +3,14 @@ import { ar } from "date-fns/locale";
 import { TFirstDayOfWeek } from "@/types/shared";
 
 import styles from "./MiniCalendar.module.css";
+import { TEvent } from "../../Calendar";
 
 type TMiniCalendarProps = {
   getDaysInMonth: (date: Date) => Date[];
   currentDate: Date;
   firstDayOfWeek: TFirstDayOfWeek;
   onDateChange: (date: Date) => void;
+  events: TEvent[] | null;
 };
 
 const MiniCalendar = ({
@@ -16,6 +18,7 @@ const MiniCalendar = ({
   currentDate,
   firstDayOfWeek,
   onDateChange,
+  events,
 }: TMiniCalendarProps) => {
 
   const goToNextMonth = () => onDateChange(addMonths(currentDate, 1));

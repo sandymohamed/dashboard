@@ -15,18 +15,27 @@ type TLessonsResponse =
   | TFamilyResponse
   | TTeacherResponse;
 
-const actGetLessons = createAsyncThunk('lessons/actGetLessons', async (token: string, thunkAPI) => {
+type TGetLessonsPrams = {
+  token: string;
+  next?: string;
+}
+
+
+const actGetLessons = createAsyncThunk('lessons/actGetLessons', async ({token, next}: TGetLessonsPrams, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
 
   try {
-    const url = 'https://elmadrasah-development-ff14bf466889.herokuapp.com/dashboard/lesson/';
+    let url = 'https://elmadrasah-development-ff14bf466889.herokuapp.com/dashboard/lesson/';
+    if (next) {
+      url = next;
+    }
     const config = {
       headers: {
         'Authorization': `Token ${token}`
       }
     };
     const response = await axios.get<TLessonsResponse>(url, config);
-    console.log(response.data)
+    console.log('from get lesson', response.data)
     return response.data
   } catch (error) {
     return rejectWithValue(axiosErrorHandler(error));

@@ -51,6 +51,11 @@ menu {
   font-weight: 400;
   font-size: 1.6rem;
   line-height: 1.5;
+  color: var(--secondary-color);
+}
+
+.mainContainer {
+  display: flex;
 }
 
 .grid {
@@ -65,9 +70,13 @@ menu {
     display: block;
   }
 }
+
+.contentBox {
+  flex: 1;
+}
  
 .content {
-  grid-area: content;
+  /* grid-area: content; */
   padding: 3.2rem;
   padding-bottom: 0;
 }
@@ -112,4 +121,9 @@ menu {
 .css-1q6at85-MuiInputBase-root-MuiOutlinedInput-root {
   direction: ltr;
   padding-block: 0.5rem;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
 }

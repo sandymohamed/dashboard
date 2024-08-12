@@ -4,12 +4,13 @@ import { TLesson } from "@/validations/LessonSchema";
 import { TLoading } from "@/types/shared";
 import actGetLessons from "./act/actGetLessons";
 import { isString } from "@/types/gurads";
+import actGetLessonsByRange from "./act/actGetLessonsByRange";
 
 type TLessonsState = {
   lessons: TLesson[];
-  count: number;
-  next: string | null;
-  previous: string | null;
+  count?: number;
+  next?: string | null;
+  previous?: string | null;
   loading: TLoading;
   error: string | null;
 
@@ -21,17 +22,15 @@ type TLessonsState = {
   completion_percentage?: number;
 
   // Family-specific fields
-  students?: Array<
-    {
-      student_id: number;
-      student_name: string;
-      subjects: Record<
-        string,
-        { missed: number; attended: number; scheduled: number }
-      >;
-      completion_percentage: number;
-    }
-  >;
+  students?: Array<{
+    student_id: number;
+    student_name: string;
+    subjects: Record<
+      string,
+      { missed: number; attended: number; scheduled: number }
+    >;
+    completion_percentage: number;
+  }>;
 
   // Admin-specific fields
   missed_stats?: {
@@ -75,10 +74,11 @@ const lessonsSlice = createSlice({
     builder.addCase(actGetLessons.fulfilled, (state, action) => {
       state.loading = "succeeded";
       state.lessons = action.payload.results;
+      state.next = action.payload.next;
+      state.previous = action.payload.previous;
       console.log("action.palyoad", action.payload);
       if ("students" in action.payload) {
-        state.students = action.payload.students as Array<
-        {
+        state.students = action.payload.students as Array<{
           student_id: number;
           student_name: string;
           subjects: Record<
@@ -86,13 +86,29 @@ const lessonsSlice = createSlice({
             { missed: number; attended: number; scheduled: number }
           >;
           completion_percentage: number;
-        }
-      >;
-    
+        }>;
       }
     });
 
     builder.addCase(actGetLessons.rejected, (state, action) => {
+      state.loading = "failed";
+      if (isString(action.payload)) {
+        state.error = action.payload;
+      }
+    });
+
+    // Lessons By Range
+    builder.addCase(actGetLessonsByRange.pending, (state) => {
+      state.loading = "pending";
+      state.error = null;
+    });
+
+    builder.addCase(actGetLessonsByRange.fulfilled, (state, action) => {
+      state.loading = "succeeded";
+      state.lessons = action.payload;
+    });
+
+    builder.addCase(actGetLessonsByRange.rejected, (state, action) => {
       state.loading = "failed";
       if (isString(action.payload)) {
         state.error = action.payload;

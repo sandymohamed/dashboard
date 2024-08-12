@@ -1,10 +1,10 @@
-import { TUser } from "@/types/shared";
+import { TUserRole } from "@/types/shared";
 import axiosErrorHandler from "@/utils/axiosErrorHandler";
 import { TFormData } from "@/validations/LoginSchema";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export type TAuthLoginResponse = {
+type TAuthLoginResponse = {
   message: string;
   user: {
     id: number;
@@ -13,7 +13,7 @@ export type TAuthLoginResponse = {
     first_name: string;
     last_name: string;
     token: string;
-    user_type: TUser;
+    user_type?: TUserRole;
   }
   set_password_url?: string;
   modified_email?: string;

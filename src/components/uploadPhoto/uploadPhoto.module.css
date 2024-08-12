@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 3.2rem;
+}
+
+.container span {
+  color: var(--gray-color)  
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.uploadBox {
+  position: relative;
+}
+
+.previewBox {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.previewBox img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.uploadBox button {
+  position: absolute;
+  bottom: -8px;
+  left: -4px;
+  display: flex;
+  background: transparent;
+}
+

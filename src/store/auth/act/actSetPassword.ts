@@ -1,4 +1,5 @@
 import { TFormValuesWithEmail } from "@/pages/login/SetPassword";
+import { TUserRole } from "@/types/shared";
 import axiosErrorHandler from "@/utils/axiosErrorHandler";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -11,7 +12,7 @@ type TSetPassword = {
     phone: string;
     first_name: string;
     last_name: string;
-    user_type: string;
+    user_type: TUserRole;
     token: string;
   };
 };

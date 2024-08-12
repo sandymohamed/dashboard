@@ -22,11 +22,15 @@ import {
   TeacherReportsPage,
   TeacherStudentsPage,
 } from "@/pages/teacher";
+import { FamilyHomePage, FamilyNotesPage } from "@/pages/family";
 import {
-  FamilyHomePage,
-  FamilyNotesPage,
-} from "@/pages/family";
-import { CalendarPage, HelpPage, SettingsPage } from "@/pages/shared";
+  CalendarPage,
+  HelpPage,
+  Profile,
+  Roles,
+  Security,
+  SettingsPage,
+} from "@/pages/shared";
 import { Login, PhoneNumber, SetPassword } from "@/pages/login";
 
 const SIDEBAR_DATA = {
@@ -158,6 +162,16 @@ const router = createBrowserRouter([
       {
         path: "settings",
         element: <SettingsPage />,
+        children: [
+          {
+            index: true,
+            element: <Profile />,
+          },
+          {
+            path: "security",
+            element: <Security />,
+          }
+        ],
       },
     ],
   },
@@ -198,6 +212,20 @@ const router = createBrowserRouter([
       {
         path: "settings",
         element: <SettingsPage />,
+        children: [
+          {
+            index: true,
+            element: <Profile />,
+          },
+          {
+            path: "security",
+            element: <Security />,
+          },
+          {
+            path: "roles",
+            element: <Roles />,
+          },
+        ],
       },
     ],
   },
@@ -234,6 +262,16 @@ const router = createBrowserRouter([
       {
         path: "settings",
         element: <SettingsPage />,
+        children: [
+          {
+            index: true,
+            element: <Profile />,
+          },
+          {
+            path: "security",
+            element: <Security />,
+          }
+        ],
       },
     ],
   },
@@ -266,6 +304,16 @@ const router = createBrowserRouter([
       {
         path: "settings",
         element: <SettingsPage />,
+        children: [
+          {
+            index: true,
+            element: <Profile />,
+          },
+          {
+            path: "security",
+            element: <Security />,
+          }
+        ],
       },
     ],
   },

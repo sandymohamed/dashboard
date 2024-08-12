@@ -2,9 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import actAuthLogin from "./act/actAuthLogin";
 import actGoogleLogin from "./act/actGoogleLogin";
 import { isString } from "@/types/gurads";
-import { TLoading } from "@/types/shared";
+import { TLoading, TUserRole } from "@/types/shared";
 import actSetPassword from "./act/actSetPassword";
-
 type TAuthState = {
   user: {
     id?: number;
@@ -12,7 +11,11 @@ type TAuthState = {
     phone?: string;
     first_name: string;
     last_name: string;
-    token: string;
+    token?: string;
+    user_type?: TUserRole;
+    image?: string;
+    gender?: string;
+    birth_date?: string;
   } | null;
   loading: TLoading;
   error: string | null;

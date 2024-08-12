@@ -12,6 +12,25 @@ import {
 } from "redux-persist";
 import auth from "./auth/authSlice";
 import lessons from "./lessons/LessonsSlice";
+import profile from "./profile/ProfileSlice";
+
+const rootPersistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ["lessons", "auth", 'profile'],
+}
+
+const lessonsPersistConfig = {
+  key: 'lessons',
+  storage,
+  whitelist: ["lessons"],
+}
+
+const profilePersistConfig = {
+  key: 'profile',
+  storage,
+  whitelist: ["user"],
+}
 
 const authPersistConfig = {
   key: 'auth',
@@ -21,11 +40,14 @@ const authPersistConfig = {
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, auth),
-  lessons
+  lessons: persistReducer(lessonsPersistConfig, lessons),
+  profile: persistReducer(profilePersistConfig, profile),
 })
 
+const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
+
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

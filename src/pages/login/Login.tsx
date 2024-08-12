@@ -4,13 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 import LoginSchema, { TFormData } from "@/validations/LoginSchema";
 
-import AppleIcon from "@/assets/apple.svg?react";
-
 import styles from "./login.module.css";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { actAuthLogin, actGoogleLogin } from "@/store/auth/authSlice";
 import { GoogleLogin } from "@react-oauth/google";
+import { actGetUserProfile } from "@/store/profile/ProfileSlice";
+
 const Login = () => {
   const { loading, error } = useAppSelector((state) => state.auth);
 
@@ -40,7 +40,8 @@ const Login = () => {
             navigate("/set-phoneNumber");
             return;
           }
-          navigate(`/${data.user?.user_type.toLowerCase()}`, { replace: true });
+          dispatch(actGetUserProfile(data.user.token));
+          navigate(`/${data.user?.user_type?.toLowerCase()}`, { replace: true });
         }
       });
   };
@@ -114,10 +115,10 @@ const Login = () => {
               }}
             />
           </div>
-          <button>
+          {/* <button>
             Apple
             <AppleIcon />
-          </button>
+          </button> */}
         </div>
       </div>
     </article>

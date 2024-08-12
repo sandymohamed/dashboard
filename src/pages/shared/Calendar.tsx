@@ -11,7 +11,7 @@ const CalendarPage = () => {
 
   const { lessons } = useAppSelector(state => state.lessons)
   
-  const events = lessons.map(event => ({
+  const events = lessons?.map(event => ({
     id: event.id,
     title: event.service_name,
     start: event.from_datetime,
@@ -24,12 +24,12 @@ const CalendarPage = () => {
   }));
 
 
-  useEffect(() => {
-    if (!user) return
-    dispatch(actGetLessons(user.token))
-  }, [dispatch, user]);
+  // useEffect(() => {
+  //   if (!user) return
+  //   dispatch(actGetLessons({token: user.token}))
+  // }, [dispatch, user]);
 
-  return <Calendar events={events} />
+  return <Calendar />
 }
 
 export default CalendarPage
