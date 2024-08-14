@@ -1,5 +1,4 @@
 import { TEvent } from "@/components/calendar/Calendar";
-import { DateClickArg } from "@fullcalendar/interaction/index.js";
 import FullCalendar from "@fullcalendar/react";
 import React, { createContext, useRef, useState } from "react";
 

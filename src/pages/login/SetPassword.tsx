@@ -36,7 +36,7 @@ const SetPassword = () => {
     }
     dispatch(actSetPassword(data))
       .unwrap()
-      .then((data) => navigate(`/${data.user.user_type.toLowerCase()}`));
+      .then((data) => data.user.user_type &&  navigate(`/${data.user.user_type.toLowerCase()}`));
   };
 
   return (

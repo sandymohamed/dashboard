@@ -6,15 +6,11 @@ import {
   isSameDay,
   startOfWeek,
   endOfWeek,
-  isToday,
 } from "date-fns";
 import { ar } from "date-fns/locale";
-import { DateClickArg } from "@fullcalendar/interaction/index.js";
 import { TFirstDayOfWeek } from "@/types/shared";
 import MiniCalendar from "./mini-calendar/MiniCalendar";
 import "./Sidebar.css";
-import { TEvent } from "../Calendar";
-import { useAppSelector } from "@/store/hooks";
 import { useContext } from "react";
 import { SidebarContext } from "@/store/context/SidebarContext";
 import { useResponsive } from "@/hooks";
