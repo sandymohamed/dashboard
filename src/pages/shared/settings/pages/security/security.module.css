@@ -17,6 +17,12 @@
   gap: 1.6rem;
 }
 
+@media (max-width: 991px) {
+  .row {
+    flex-direction: column;
+  }
+}
+
 .row:not(:last-of-type) {
   margin-bottom: 3.2rem;
 }
@@ -53,9 +59,22 @@
   text-align: center;
 }
 
+@media (max-width: 991px) {
+  .form button {
+    width: 100%;
+  }
+}
+
 .content {
   margin-block: 3.2rem;
   padding: 3.2rem;
   box-shadow: 0px 4px 20px 0px #0000001A;
   border-radius: 1.6rem;
+}
+
+@media (max-width: 991px) {
+  .content {
+    width: 90%;
+    margin-inline: auto;
+  }
 }

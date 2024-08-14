@@ -8,10 +8,6 @@ html {
   font-size: 62.5%; /* 1rem = 10px */
 }
 
-body {
-  overflow-x: hidden;
-}
-
 button,
 input {
   outline: none;
@@ -43,22 +39,30 @@ menu {
   --main-color: #1C8A44;
   --secondary-color: #171717;
   --gray-color: #6F6F6F;
+  --orange-color: #FFB72B;
 }
 
 .container {
-  min-height: 100dvh;
+  min-height: 100vh;
   font-family: "Tajawal", sans-serif;
   font-weight: 400;
   font-size: 1.6rem;
   line-height: 1.5;
   color: var(--secondary-color);
+  
+}
+
+@supports (min-height: 100dvh) {
+  .container {
+    min-height: 100dvh;
+  }
 }
 
 .mainContainer {
   display: flex;
 }
 
-.grid {
+/* .grid {
   display: grid;
   grid-template-columns: 19rem 1fr;
   grid-template-rows: 5rem 1fr;
@@ -69,16 +73,27 @@ menu {
   .grid {
     display: block;
   }
-}
+} */
 
 .contentBox {
   flex: 1;
+  display: flex;
+  flex-direction: column;
 }
  
 .content {
-  /* grid-area: content; */
   padding: 3.2rem;
-  padding-bottom: 0;
+  /* padding-bottom: 0; */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 991px) {
+  .content {
+    padding: 0;
+    flex: unset;
+  }
 }
 
 .active {
@@ -126,4 +141,25 @@ menu {
 .icon {
   display: flex;
   align-items: center;
+}
+
+/* .icon svg,
+.icon svg > path,
+.icon svg > path[fill] {
+  stroke: #fff;
+  fill: #fff;
+}
+
+@media (max-width: 991px) {
+  .icon svg, 
+  .icon svg > path
+  .icon svg > path[fill] {
+    stroke: var(--secondary-color);
+    fill: var(--secondary-color);
+  }
+} */
+
+/* change the font of google button */
+.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-BPrWId {
+  font-family: "Tajawal", sans-serif !important;
 }

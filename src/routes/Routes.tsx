@@ -4,11 +4,11 @@ import { StudentHomePage } from "@/pages/student";
 import ProdectedRoute from "./ProtectedRoute";
 
 // ==================== Icons ====================
-import HomeIcon from "@/assets/home.svg?react";
-import CalendarIcon from "@/assets/calendar.svg?react";
-import Boy from "@/assets/Boy.svg?react";
-import Teacher from "@/assets/teacher.svg?react";
-import Report from "@/assets/reports.svg?react";
+// import HomeIcon from "@/assets/home.svg?react";
+// import CalendarIcon from "@/assets/calendar.svg?react";
+// import Boy from "@/assets/Boy.svg?react";
+// import Teacher from "@/assets/teacher.svg?react";
+// import Report from "@/assets/reports.svg?react";
 import {
   AdminClassesPage,
   AdminHomePage,
@@ -32,6 +32,18 @@ import {
   SettingsPage,
 } from "@/pages/shared";
 import { Login, PhoneNumber, SetPassword } from "@/pages/login";
+import {
+  BoyIcon,
+  CalendarIcon,
+  HomeIcon,
+  PH_boyIcon,
+  PH_calendarIcon,
+  PH_homeIcon,
+  PH_reportsIcon,
+  PH_teacherIcon,
+  ReportsIcon,
+  TeacherIcon,
+} from "@/assets/nav-icons";
 
 const SIDEBAR_DATA = {
   Student: [
@@ -39,11 +51,13 @@ const SIDEBAR_DATA = {
       title: "الرئيسية",
       path: "/student",
       icon: <HomeIcon />,
+      phone_icon: <PH_homeIcon />,
     },
     {
       title: "الجدول",
       path: "calendar",
       icon: <CalendarIcon />,
+      phone_icon: <PH_calendarIcon />,
     },
   ],
 
@@ -52,26 +66,31 @@ const SIDEBAR_DATA = {
       title: "الرئيسية",
       path: "/admin",
       icon: <HomeIcon />,
+      phone_icon: <PH_homeIcon />,
     },
     {
       title: "الحصص",
       path: "classes",
       icon: <CalendarIcon />,
+      phone_icon: <PH_calendarIcon />,
     },
     {
       title: "الطلاب",
       path: "students",
-      icon: <Boy />,
+      icon: <BoyIcon />,
+      phone_icon: <PH_boyIcon />,
     },
     {
       title: "المعلمين",
       path: "teachers",
-      icon: <Teacher />,
+      icon: <TeacherIcon />,
+      phone_icon: <PH_teacherIcon />,
     },
     {
       title: "التقارير",
       path: "reports",
-      icon: <Report />,
+      icon: <ReportsIcon />,
+      phone_icon: <PH_reportsIcon />,
     },
   ],
 
@@ -80,21 +99,25 @@ const SIDEBAR_DATA = {
       title: "الرئيسية",
       path: "/teacher",
       icon: <HomeIcon />,
+      phone_icon: <PH_homeIcon />,
     },
     {
       title: "الحصص",
       path: "classes",
       icon: <CalendarIcon />,
+      phone_icon: <PH_calendarIcon />,
     },
     {
       title: "الطلاب",
       path: "students",
-      icon: <Boy />,
+      icon: <BoyIcon />,
+      phone_icon: <PH_boyIcon />,
     },
     {
       title: "التقارير",
       path: "reports",
-      icon: <Report />,
+      icon: <ReportsIcon />,
+      phone_icon: <PH_reportsIcon />,
     },
   ],
 
@@ -103,16 +126,19 @@ const SIDEBAR_DATA = {
       title: "الرئيسية",
       path: "/family",
       icon: <HomeIcon />,
+      phone_icon: <PH_homeIcon />,
     },
     {
       title: "الجدول",
       path: "calendar",
       icon: <CalendarIcon />,
+      phone_icon: <PH_calendarIcon />,
     },
     {
       title: "الملاحظات",
       path: "notes",
-      icon: <Report />,
+      icon: <ReportsIcon />,
+      phone_icon: <PH_reportsIcon />,
     },
   ],
 };
@@ -170,7 +196,7 @@ const router = createBrowserRouter([
           {
             path: "security",
             element: <Security />,
-          }
+          },
         ],
       },
     ],
@@ -270,7 +296,7 @@ const router = createBrowserRouter([
           {
             path: "security",
             element: <Security />,
-          }
+          },
         ],
       },
     ],
@@ -312,7 +338,7 @@ const router = createBrowserRouter([
           {
             path: "security",
             element: <Security />,
-          }
+          },
         ],
       },
     ],

@@ -1,6 +1,13 @@
 .calendar_container {
   display: flex;
   gap: 1.5rem;
+  flex: 1;
+}
+
+@media (max-width: 991px) {
+  .calendar_container {
+    flex-direction: column;
+  }
 }
 
 /* ================ Every Cell In Calendar Body ================ */
@@ -31,7 +38,7 @@
 
 /* ================ Events ================ */
 .my-custom-event {
-  /* background-color: #ffe6ce; */
+  background-color: #ffe6ce;
   color: #faa15d;
   border: none;
   border-right: 4px solid #ee7214;
@@ -39,12 +46,12 @@
   border-radius: 5px;
   width: 100%;
   cursor: pointer;
-  font-size: 1.6rem;
+  font-size: 1.4rem;
 }
 
 
 .fc-daygrid-day-events td {
-  /* background-color: #F4FFF9; */
+  background-color: #F4FFF9;
 }
 
 .fc-v-event .fc-event-main {
@@ -94,4 +101,16 @@
 /* ================ Time Grid Row ================ */
 .fc .fc-timegrid-slot {
   height: 4rem;
+  text-align: center;
+}
+
+.fc .fc-timegrid-axis-frame {
+  text-align: center;
+}
+
+/* ================ Phone Calendar ================ */
+.phoneCalendar {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
 }

@@ -3,6 +3,12 @@
   gap: 1.6rem;
 }
 
+@media (max-width: 991px) {
+  .row {
+    flex-direction: column;
+  }
+}
+
 .row:not(:last-of-type) {
   margin-bottom: 3.2rem;
 }
@@ -13,6 +19,7 @@
   gap: 0.8rem;
   position: relative;
 }
+
 
 .group label {
   color: var(--gray-color);
@@ -43,6 +50,18 @@
   text-align: center;
 }
 
+@media (max-width: 991px) {
+  .form button[type="submit"] {
+    width: 100%;
+  }
+}
+
+
+/* style for input that is disabled */
+input:disabled {
+  cursor: not-allowed;
+}
+
 .icon {
   position: absolute;
   left: 1rem;
@@ -54,4 +73,16 @@
   padding: 3.2rem;
   box-shadow: 0px 4px 20px 0px #0000001A;
   border-radius: 1.6rem;
+}
+
+@media (max-width: 991px) {
+  .content {
+    width: 90%;
+    margin-inline: auto;
+  }
+}
+
+.form button[disabled] {
+  background-color: #D8DADC;
+  cursor: not-allowed;
 }

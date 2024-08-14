@@ -13,9 +13,6 @@ type TAuthState = {
     last_name: string;
     token?: string;
     user_type?: TUserRole;
-    image?: string;
-    gender?: string;
-    birth_date?: string;
   } | null;
   loading: TLoading;
   error: string | null;

@@ -7,7 +7,7 @@ import arLocale from "@fullcalendar/core/locales/ar";
 import Sidebar from "./sideBar/SideBar";
 
 import "./calendar.css";
-import { useState, useRef, useCallback, useMemo } from "react";
+import { useState, useRef, useCallback, useMemo, useContext } from "react";
 import {
   EventContentArg,
   EventInput,
@@ -17,6 +17,8 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import actGetLessons from "@/store/lessons/act/actGetLessons";
 import { TLesson } from "@/validations/LessonSchema";
 import actGetLessonsByRange from "@/store/lessons/act/actGetLessonsByRange";
+import { useResponsive } from "@/hooks";
+import { SidebarContext } from "@/store/context/SidebarContext";
 
 export type TEvent = {
   id: number;
@@ -34,24 +36,23 @@ const Calendar = () => {
   const dispatch = useAppDispatch();
 
   const { students, lessons } = useAppSelector((state) => state.lessons);
-  console.log('students', students);
+  console.log("lessons", lessons);
 
   const { user } = useAppSelector((state) => state.auth);
 
-  const calendarRef = useRef<FullCalendar>(null);
+  const {
+    calendarRef,
+    setCurrentDate,
+    setClickedEvent,
+    setCurrentEvents,
+    currentEvents,
+  } = useContext(SidebarContext);
 
-  const [currentDate, setCurrentDate] = useState(new Date());
+  // const [clickedEvent, setClickedEvent] = useState<DateClickArg | null>(null);
 
-  const [clickedEvent, setClickedEvent] = useState<DateClickArg | null>(null);
+  // const [currentEvents, setCurrentEvents] = useState<TEvent[] | null>(null);
 
-  const [currentEvents, setCurrentEvents] = useState<TEvent[] | null>(null);
-  const handleDateChange = (date: Date) => {
-    setCurrentDate(date);
-    if (calendarRef.current) {
-      const calendarApi = calendarRef.current.getApi();
-      calendarApi.gotoDate(date);
-    }
-  };
+  const { isPhone } = useResponsive();
 
   const customArLocale = {
     ...arLocale,
@@ -163,10 +164,10 @@ const Calendar = () => {
         status: event.status,
         employee: event.employee_name,
         timeZone: event.time_zone,
-        backgroundColor: 'red'
+        backgroundColor: "red",
       }));
 
-      setCurrentEvents(events);
+      // setCurrentEvents(events);
       console.log("calendar events", events);
 
       if (!user?.token) return;
@@ -196,6 +197,8 @@ const Calendar = () => {
           new Date(event.start) >= info.start && new Date(event.end) <= info.end
       );
 
+      setCurrentEvents(eventsInRange);
+
       successCallback(eventsInRange);
     },
     [dispatch, user?.token]
@@ -203,7 +206,7 @@ const Calendar = () => {
 
   return (
     <div className="calendar_container">
-      <div className="calendar_container">
+      <div className={isPhone ? "phoneCalendar" : ""}>
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
@@ -221,7 +224,7 @@ const Calendar = () => {
           ref={calendarRef}
           dateClick={(info) => {
             setCurrentDate(info.date);
-            setClickedEvent(info);
+            setClickedEvent(info.date);
           }}
         />
       </div>
@@ -260,13 +263,7 @@ const Calendar = () => {
       {/* //   } */}
       {/* // }} */}
       {/* // /> */}
-      <Sidebar
-        currentDate={currentDate}
-        onDateChange={handleDateChange}
-        firstDayOfWeek={1}
-        clickedEvent={clickedEvent}
-        events={currentEvents}
-      />
+      <Sidebar firstDayOfWeek={1} />
     </div>
   );
 };

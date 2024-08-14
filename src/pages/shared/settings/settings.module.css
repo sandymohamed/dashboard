@@ -2,6 +2,12 @@
   display: flex;
 }
 
+@media (max-width: 991px) {
+  .nav {
+    justify-content: center;
+  }
+}
+
 .nav a {
   padding: 1rem 1.2rem;
   color: var(--gray-color);

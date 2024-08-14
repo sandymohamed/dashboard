@@ -15,68 +15,123 @@ import MiniCalendar from "./mini-calendar/MiniCalendar";
 import "./Sidebar.css";
 import { TEvent } from "../Calendar";
 import { useAppSelector } from "@/store/hooks";
+import { useContext } from "react";
+import { SidebarContext } from "@/store/context/SidebarContext";
+import { useResponsive } from "@/hooks";
+import { PH_calendarIcon, PH_teacherIcon } from "@/assets/nav-icons";
+import Clock from "@/assets/grayClock.svg?react";
 
 type TSidebarProps = {
-  currentDate: Date;
-  onDateChange: (date: Date) => void;
   firstDayOfWeek: TFirstDayOfWeek;
-  clickedEvent: DateClickArg | null;
-  events: TEvent[] | null;
 };
 
-const Sidebar = ({
-  currentDate,
-  onDateChange,
-  firstDayOfWeek,
-  clickedEvent,
-  events
-}: TSidebarProps) => {
+const Sidebar = ({ firstDayOfWeek }: TSidebarProps) => {
   const getDaysInMonth = (date: Date) => {
-
-
     const start = startOfWeek(startOfMonth(date), {
       weekStartsOn: firstDayOfWeek,
     });
+
     const end = endOfWeek(endOfMonth(date), { weekStartsOn: firstDayOfWeek });
     return eachDayOfInterval({ start, end });
   };
 
+  const { clickedEvent, currentEvents: events } = useContext(SidebarContext);
+
+  const { isPhone } = useResponsive();
+
+  console.log("from sidebar events", events);
+
+  const formatArabicDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return format(date, "d MMMM", { locale: ar });
+  };
+
   return (
-    <div className="calender_sidebar">
-      <MiniCalendar
-        currentDate={currentDate}
-        firstDayOfWeek={1}
-        onDateChange={onDateChange}
-        getDaysInMonth={getDaysInMonth}
-        events={events}
-      />
-      <div className="daily-schedule">
-        {events && events.map((event) => {
-          const eventDate = new Date(event.start);
-          if (
-            (clickedEvent && isSameDay(eventDate, clickedEvent.date)) ||
-            isToday(eventDate)
-          ) {
-            return (
-              <div key={event.title} className="event">
-                <div className="time">
-                  <span>
-                    {format(new Date(event.start), "hh:mm a", { locale: ar })}
-                  </span>
-                  -
-                  {event.end && (
-                    <span>
-                      {format(new Date(event.end), "hh:mm a", { locale: ar })}
-                    </span>
-                  )}
-                </div>
-                <div>{event.title}</div>
-              </div>
-            );
-          }
-        })}
+    <>
+      <div className="calender_sidebar">
+        <MiniCalendar firstDayOfWeek={1} getDaysInMonth={getDaysInMonth} />
+        {!isPhone && (
+          <div className="daily-schedule">
+            {events &&
+              events.map((event) => {
+                const eventDate = new Date(event.start);
+                if (clickedEvent && isSameDay(eventDate, clickedEvent)) {
+                  return (
+                    <section key={event.title} className="event-wrapper">
+                      <div className="bullet"></div>
+                      <div className="event">
+                        <div className="time">
+                          <span>
+                            {format(new Date(event.start), "hh:mm a", {
+                              locale: ar,
+                            })}
+                          </span>
+
+                          <span>-</span>
+
+                          {event.end && (
+                            <span>
+                              {format(new Date(event.end), "hh:mm a", {
+                                locale: ar,
+                              })}
+                            </span>
+                          )}
+                        </div>
+                        <div>{event.title}</div>
+                      </div>
+                    </section>
+                  );
+                }
+              })}
+          </div>
+        )}
       </div>
-    </div>
+      {isPhone && (
+        <section className="daily-schedule--phone">
+          {events &&
+            events.map((event) => {
+              const eventDate = new Date(event.start);
+              if (clickedEvent && isSameDay(eventDate, clickedEvent)) {
+                return (
+                  <article key={event.title} className="event-wrapper--phone">
+                    <section className="event__info">
+                      <h3>{event.title}</h3>
+                      <div className="event__info--group">
+                        <PH_teacherIcon />
+                        <span>{event.employee}</span>
+                      </div>
+                      <div className="event__info--group">
+                        <PH_calendarIcon />
+                        <span>{formatArabicDate(event.start)}</span>
+                      </div>
+                      <div className="event__info--group">
+                        <Clock />
+                        <div className="time">
+                          <span>
+                            {format(new Date(event.start), "hh:mm a", {
+                              locale: ar,
+                            })}
+                          </span>
+
+                          <span>-</span>
+
+                          {event.end && (
+                            <span>
+                              {format(new Date(event.end), "hh:mm a", {
+                                locale: ar,
+                              })}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </section>
+                  </article>
+                );
+              }
+            })}
+        </section>
+      )}
+    </>
   );
 };
 

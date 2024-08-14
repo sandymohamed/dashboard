@@ -10,7 +10,7 @@ import { actGetUserProfile } from "@/store/profile/ProfileSlice";
 const { form, row, group, content } = styles;
 
 const Profile = () => {
-  const { user } = useAppSelector((state) => state.profile);
+  const { user, loading } = useAppSelector((state) => state.profile);
   const { user: authUser } = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
@@ -89,7 +89,7 @@ const Profile = () => {
           </div>
         </section>
 
-        <button type="submit">حفظ</button>
+        <button type="submit" disabled={loading === 'pending'}>{loading === 'pending' ? "جاري الحفظ..." : "حفظ"}</button>
       </form>
     </section>
   );

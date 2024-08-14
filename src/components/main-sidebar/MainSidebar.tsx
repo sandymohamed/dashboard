@@ -1,62 +1,128 @@
 import { NavLink } from "react-router-dom";
 
 import Logo from "@/assets/logo.svg?react";
-import SettingsIcon from "@/assets/settings.svg?react";
-import HelpIcon from "@/assets/help.svg?react";
 import CloseArrow from "@/assets/closeArrow.svg?react";
 import OpenArrow from "@/assets/openArrow.svg?react";
 
 import styles from "./MainSidebar.module.css";
 import { TPath } from "@/types/shared";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useResponsive } from "@/hooks";
+import {
+  PH_helpIcon,
+  PH_settingsIcon,
+  SettingsIcon,
+  HelpIcon,
+  SignoutIcon,
+  PH_signoutIcon,
+} from "@/assets/nav-icons";
+import { logout } from "@/store/auth/authSlice";
+import { removeProfile } from "@/store/profile/ProfileSlice";
+import { SidebarContext } from "@/store/context/SidebarContext";
 
 type TSidebarProps = {
   data: TPath[];
 };
 
+const { sidebar, logo, arrow, collapse, avatarBox, signout, open } = styles;
 const MainSidebar = ({ data }: TSidebarProps) => {
-  const { sidebar, logo, arrow, collapse } = styles;
-
   const [expanded, setExpanded] = useState(true);
 
+  const { isPhone } = useResponsive();
+
+  const { user } = useAppSelector((state) => state.profile);
+
+  const dispatch = useAppDispatch();
+
+  const { isSidebarOpen, setIsSidebarOpen } = useContext(SidebarContext);
+
+  const signoutHandler = () => {
+    dispatch(logout())
+    dispatch(removeProfile());
+  }
+
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  }
+
   return (
-    <aside className={sidebar} style={{ width: expanded ? "200px" : "85px", transition: "0.3s" }}>
-      <Logo className={logo} style={{width: expanded ? 'auto' : '70px'}} />
-      <section>
+    <aside
+      className={`${sidebar} ${isSidebarOpen ? open : ''}`}
+      style={isPhone ? undefined : { width: expanded ? "200px" : "85px", transition: "0.3s" }}
+    >
+      {isPhone ? (
+        <>
+          <div className={avatarBox}>
+            <img src={user?.image} alt="avatar" />
+          </div>
+          <p style={{ textAlign: "center", marginTop: "1rem" }}>
+            {user?.first_name} {user?.last_name}
+          </p>
+        </>
+      ) : (
+        <Logo className={logo} style={{ width: expanded ? "auto" : "70px" }} />
+      )}
+
+      <nav >
         <div className={arrow} onClick={() => setExpanded(!expanded)}>
           {expanded ? <CloseArrow /> : <OpenArrow />}
         </div>
         <menu>
-          {data.map(({ title, path, icon }) => (
-            <li key={title}>
+          {data.map(({ title, path, icon, phone_icon }) => (
+            <li key={title} onClick={closeSidebar}>
               <NavLink
                 to={path}
                 end
                 replace
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
-                <div className='icon' style={{ stroke: 'white' }}>{icon}</div>
+                <div className="icon">{isPhone ? phone_icon : icon}</div>
                 {/* To prioritize the opacity transition, we apply it here first. */}
-                <span className={expanded ? "" : collapse} style={{opacity: expanded ? '1' : '0'}}>{title}</span>
+                <span
+                  className={expanded ? "" : collapse}
+                  style={{ opacity: expanded ? "1" : "0" }}
+                >
+                  {title}
+                </span>
               </NavLink>
             </li>
           ))}
         </menu>
         <menu>
-          <li>
+          <li onClick={closeSidebar}>
             <NavLink to="settings">
-              <SettingsIcon />
-              <span className={expanded ? "" : collapse} style={{opacity: expanded ? '1' : '0'}}>الاعدادات</span>
+              {isPhone ? <PH_settingsIcon /> : <SettingsIcon />}
+              <span
+                className={expanded ? "" : collapse}
+                style={{ opacity: expanded ? "1" : "0" }}
+              >
+                الاعدادات
+              </span>
             </NavLink>
           </li>
-          <li>
+          <li onClick={closeSidebar}>
             <NavLink to="help">
-              <HelpIcon />
-              <span className={expanded ? "" : collapse} style={{opacity: expanded ? '1' : '0'}}>طلب مساعدة</span>
+              {isPhone ? <PH_helpIcon /> : <HelpIcon />}
+              <span
+                className={expanded ? "" : collapse}
+                style={{ opacity: expanded ? "1" : "0" }}
+              >
+                طلب مساعدة
+              </span>
             </NavLink>
           </li>
         </menu>
-      </section>
+        <div className={signout} onClick={signoutHandler}>
+          <div className="icon">{isPhone ? <PH_signoutIcon /> : <SignoutIcon />}</div>
+          <span
+            className={expanded ? "" : collapse}
+            style={{ opacity: expanded ? "1" : "0" }}
+          >
+            تسجيل الخروج
+          </span>
+        </div>
+      </nav>
     </aside>
   );
 };

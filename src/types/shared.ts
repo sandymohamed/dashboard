@@ -12,6 +12,7 @@ type TPath = {
   title: string;
   path: string;
   icon: React.ReactNode;
+  phone_icon: React.ReactNode;
 }
 
 export type { TLoading, TFirstDayOfWeek, TUserRole, TPath }
