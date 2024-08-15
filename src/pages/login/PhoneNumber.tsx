@@ -27,7 +27,7 @@ const PhoneNumber = () => {
     console.log(data);
     dispatch(actUpdatePhone(data))
       .unwrap()
-      .then(() => navigate(`/${user.user_type.toLowerCase()}`));
+      .then(() => user?.user_type && navigate(`/${user.user_type.toLowerCase()}`));
   };
 
   return (

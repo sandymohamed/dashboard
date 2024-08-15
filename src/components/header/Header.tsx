@@ -3,7 +3,6 @@ import Logo from "@/assets/logo.svg?react";
 import MenuIcon from "@/assets/menu.svg?react";
 import Bell from "@/assets/BellOutline.svg?react";
 import UserPhoto from "@/assets/profilePlaceholder.svg?react";
-import Avatar from "@/assets/person.svg?react";
 import { useResponsive } from "@/hooks";
 import { useAppSelector } from "@/store/hooks";
 import { useContext } from "react";
