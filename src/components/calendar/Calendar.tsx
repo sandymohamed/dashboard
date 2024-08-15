@@ -68,19 +68,6 @@ const Calendar = () => {
     );
   };
 
-  const mappedEvents = useMemo<TEvent[]>(() => {
-    return lessons.map((event) => ({
-      id: event.id.toString(),
-      title: event.service_name,
-      start: event.from_datetime,
-      end: event.to_datetime,
-      description: event.description,
-      location: event.location_name,
-      status: event.status,
-      employee: event.employee_name,
-      timeZone: event.time_zone,
-    }));
-  }, [lessons]);
 
   const fetchEvents = useCallback(
     async (
@@ -90,26 +77,22 @@ const Calendar = () => {
       const startStr = info.start.toISOString().split("T")[0];
       const endStr = info.end.toISOString().split("T")[0];
 
-      // const events = lessons.map((event) => ({
-      //   id: event.id.toString(),
-      //   title: event.service_name,
-      //   start: event.from_datetime,
-      //   end: event.to_datetime,
-      //   description: event.description,
-      //   location: event.location_name,
-      //   status: event.status,
-      //   employee: event.employee_name,
-      //   timeZone: event.time_zone,
-      //   backgroundColor: "red",
-      // }));
-
-      // setCurrentEvents(events);
-      // console.log("calendar events", events);
+      const events = lessons.map((event) => ({
+        id: event.id.toString(),
+        title: event.service_name,
+        start: event.from_datetime,
+        end: event.to_datetime,
+        description: event.description,
+        location: event.location_name,
+        status: event.status,
+        employee: event.employee_name,
+        timeZone: event.time_zone,
+      }));
 
       if (!user?.token) return;
 
       // Check if we already have events for this date range
-      const hasEventsInRange = mappedEvents.some(
+      const hasEventsInRange = events.some(
         (event) =>
           new Date(event.start) >= info.start && new Date(event.end) <= info.end
       );
@@ -128,7 +111,7 @@ const Calendar = () => {
         }
       }
 
-      const eventsInRange = mappedEvents.filter(
+      const eventsInRange = events.filter(
         (event) =>
           new Date(event.start) >= info.start && new Date(event.end) <= info.end
       );
