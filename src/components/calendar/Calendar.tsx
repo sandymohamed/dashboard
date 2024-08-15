@@ -7,7 +7,7 @@ import arLocale from "@fullcalendar/core/locales/ar";
 import Sidebar from "./sideBar/SideBar";
 
 import "./calendar.css";
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import {
   EventContentArg,
 } from "@fullcalendar/core/index.js";
@@ -17,7 +17,7 @@ import { useResponsive } from "@/hooks";
 import { SidebarContext } from "@/store/context/SidebarContext";
 
 export type TEvent = {
-  id: number;
+  id: string;
   title: string;
   start: string;
   end: string;
@@ -68,6 +68,20 @@ const Calendar = () => {
     );
   };
 
+  const mappedEvents = useMemo<TEvent[]>(() => {
+    return lessons.map((event) => ({
+      id: event.id.toString(),
+      title: event.service_name,
+      start: event.from_datetime,
+      end: event.to_datetime,
+      description: event.description,
+      location: event.location_name,
+      status: event.status,
+      employee: event.employee_name,
+      timeZone: event.time_zone,
+    }));
+  }, [lessons]);
+
   const fetchEvents = useCallback(
     async (
       info: { start: Date; end: Date },
@@ -76,26 +90,26 @@ const Calendar = () => {
       const startStr = info.start.toISOString().split("T")[0];
       const endStr = info.end.toISOString().split("T")[0];
 
-      const events = lessons.map((event) => ({
-        id: event.id,
-        title: event.service_name,
-        start: event.from_datetime,
-        end: event.to_datetime,
-        description: event.description,
-        location: event.location_name,
-        status: event.status,
-        employee: event.employee_name,
-        timeZone: event.time_zone,
-        backgroundColor: "red",
-      }));
+      // const events = lessons.map((event) => ({
+      //   id: event.id.toString(),
+      //   title: event.service_name,
+      //   start: event.from_datetime,
+      //   end: event.to_datetime,
+      //   description: event.description,
+      //   location: event.location_name,
+      //   status: event.status,
+      //   employee: event.employee_name,
+      //   timeZone: event.time_zone,
+      //   backgroundColor: "red",
+      // }));
 
       // setCurrentEvents(events);
-      console.log("calendar events", events);
+      // console.log("calendar events", events);
 
       if (!user?.token) return;
 
       // Check if we already have events for this date range
-      const hasEventsInRange = events.some(
+      const hasEventsInRange = mappedEvents.some(
         (event) =>
           new Date(event.start) >= info.start && new Date(event.end) <= info.end
       );
@@ -114,7 +128,7 @@ const Calendar = () => {
         }
       }
 
-      const eventsInRange = events.filter(
+      const eventsInRange = mappedEvents.filter(
         (event) =>
           new Date(event.start) >= info.start && new Date(event.end) <= info.end
       );
@@ -123,8 +137,8 @@ const Calendar = () => {
 
       successCallback(eventsInRange);
     },
-    [dispatch, user?.token]
-  );
+    [dispatch, user?.token, setCurrentEvents]
+  )
 
   return (
     <div className="calendar_container">
