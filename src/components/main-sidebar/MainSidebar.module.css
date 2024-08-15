@@ -20,6 +20,7 @@
   .sidebar.open {
     transform: translateX(0);
     width: 100%;
+    position: fixed;
   }
 }
 
@@ -67,8 +68,6 @@
   display: grid;
   gap: 0.8rem;
 }
-
-
 
 .sidebar menu:first-of-type {
   padding-bottom: 2.4rem;
