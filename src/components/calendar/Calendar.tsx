@@ -7,7 +7,7 @@ import arLocale from "@fullcalendar/core/locales/ar";
 import Sidebar from "./sideBar/SideBar";
 
 import "./calendar.css";
-import { useCallback, useContext, useMemo } from "react";
+import { useCallback, useContext } from "react";
 import {
   EventContentArg,
 } from "@fullcalendar/core/index.js";
