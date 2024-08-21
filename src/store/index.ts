@@ -13,11 +13,18 @@ import {
 import auth from "./auth/authSlice";
 import lessons from "./lessons/LessonsSlice";
 import profile from "./profile/ProfileSlice";
+import reviewQuestions from "./review-questions/reviewSlice";
 
 const rootPersistConfig = {
   key: 'root',
   storage,
-  whitelist: ["lessons", "auth", 'profile'],
+  whitelist: ["lessons", "auth", 'profile', 'reviewQuestions'],
+}
+
+const reviewQuestionsPersistConfig = {
+  key: 'reviewQuestions',
+  storage,
+  whitelist: ["records"],
 }
 
 const lessonsPersistConfig = {
@@ -42,6 +49,7 @@ const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, auth),
   lessons: persistReducer(lessonsPersistConfig, lessons),
   profile: persistReducer(profilePersistConfig, profile),
+  reviewQuestions: persistReducer(reviewQuestionsPersistConfig, reviewQuestions),
 })
 
 const persistedReducer = persistReducer(rootPersistConfig, rootReducer);

@@ -30,7 +30,6 @@ const actAuthLogin = createAsyncThunk(
         formData
       );
 
-      console.log("login response", response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));

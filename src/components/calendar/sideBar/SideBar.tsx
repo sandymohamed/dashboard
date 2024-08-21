@@ -16,6 +16,8 @@ import { SidebarContext } from "@/store/context/SidebarContext";
 import { useResponsive } from "@/hooks";
 import { PH_calendarIcon, PH_teacherIcon } from "@/assets/nav-icons";
 import Clock from "@/assets/grayClock.svg?react";
+import formatArabicDate from "@/utils/formatArabicDate";
+import formatHoursAndMinutes from "@/utils/formatHoursAndMinutes";
 
 type TSidebarProps = {
   firstDayOfWeek: TFirstDayOfWeek;
@@ -32,15 +34,10 @@ const Sidebar = ({ firstDayOfWeek }: TSidebarProps) => {
   };
 
   const { clickedEvent, currentEvents: events } = useContext(SidebarContext);
+  console.log(events)
 
   const { isPhone } = useResponsive();
 
-  console.log("from sidebar events", events);
-
-  const formatArabicDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return format(date, "d MMMM", { locale: ar });
-  };
 
   return (
     <>
@@ -104,18 +101,14 @@ const Sidebar = ({ firstDayOfWeek }: TSidebarProps) => {
                         <Clock />
                         <div className="time">
                           <span>
-                            {format(new Date(event.start), "hh:mm a", {
-                              locale: ar,
-                            })}
+                            {formatHoursAndMinutes(event.start)}
                           </span>
 
                           <span>-</span>
 
                           {event.end && (
                             <span>
-                              {format(new Date(event.end), "hh:mm a", {
-                                locale: ar,
-                              })}
+                              {formatHoursAndMinutes(event.end)}
                             </span>
                           )}
                         </div>

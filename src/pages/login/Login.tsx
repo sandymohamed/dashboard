@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { actAuthLogin, actGoogleLogin } from "@/store/auth/authSlice";
 import { GoogleLogin } from "@react-oauth/google";
 import { actGetUserProfile } from "@/store/profile/ProfileSlice";
+import { actGetReviewQuestions } from "@/store/review-questions/reviewSlice";
 
 const Login = () => {
   const { loading, error } = useAppSelector((state) => state.auth);
@@ -29,7 +30,6 @@ const Login = () => {
   });
 
   const onSubmit: SubmitHandler<TFormData> = (data) => {
-    console.log("login data", data);
     dispatch(actAuthLogin(data))
       .unwrap()
       .then((data) => {
@@ -41,6 +41,7 @@ const Login = () => {
             return;
           }
           dispatch(actGetUserProfile(data.user.token));
+          dispatch(actGetReviewQuestions(data.user.token));
           navigate(`/${data.user?.user_type?.toLowerCase()}`, { replace: true });
         }
       });
@@ -50,7 +51,6 @@ const Login = () => {
     dispatch(actGoogleLogin(credential))
       .unwrap()
       .then((data) => {
-        console.log("google login response", data);
         if (data.phone === "None") {
           navigate("/set-phoneNumber");
           return;

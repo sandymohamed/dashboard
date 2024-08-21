@@ -24,10 +24,10 @@
   overflow: hidden;
 }
 
-.previewBox img {
+/* .previewBox img {
   height: 100%;
   object-fit: cover;
-}
+} */
 
 .uploadBox button {
   position: absolute;

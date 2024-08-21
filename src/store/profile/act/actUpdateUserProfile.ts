@@ -22,11 +22,7 @@ const actUpdateUserProfile = createAsyncThunk(
         }
       };
 
-      const response = await axios.patch(url, formData, config);
-
-      // return response.data;
-
-      console.log("Patch Response:", response.data);
+      await axios.patch(url, formData, config);
 
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));

@@ -79,7 +79,7 @@ const Calendar = () => {
 
       const events = lessons.map((event) => ({
         id: event.id.toString(),
-        title: event.service_name,
+        title: event.name,
         start: event.from_datetime,
         end: event.to_datetime,
         description: event.description,
@@ -138,7 +138,7 @@ const Calendar = () => {
             left: "prev,next today",
             right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
-          height={"auto"}
+          height={'auto'}
           events={fetchEvents}
           ref={calendarRef}
           dateClick={(info) => {

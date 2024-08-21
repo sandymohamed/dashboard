@@ -1,5 +1,7 @@
+import { Calendar } from "@/components"
+
 const TeacherClassesPage = () => {
-  return <h1>Classes For Teacher</h1>
+  return <Calendar />
 }
 
 export default TeacherClassesPage

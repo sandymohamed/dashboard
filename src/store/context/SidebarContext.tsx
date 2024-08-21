@@ -40,9 +40,6 @@ export const SidebarContextProvider = ({ children }: { children: React.ReactNode
 
   const [currentEvents, setCurrentEvents] = useState<TEvent[] | null>(null);
 
-  console.log(currentEvents);
-
-
   const handleDateChange = (date: Date) => {
     setCurrentDate(date);
     if (calendarRef.current) {

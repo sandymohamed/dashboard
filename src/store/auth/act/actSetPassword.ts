@@ -25,7 +25,6 @@ const actSetPassword = createAsyncThunk(
         "https://elmadrasah-development-ff14bf466889.herokuapp.com/user/set-password/",
         formData
       );
-      console.log("set password response", response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));

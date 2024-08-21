@@ -269,6 +269,10 @@ const router = createBrowserRouter([
         index: true,
         element: <TeacherHomePage />,
       },
+      // {
+      //   path: 'rate',
+      //   element: <Rate />
+      // },
       {
         path: "classes",
         element: <TeacherClassesPage />,

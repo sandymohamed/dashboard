@@ -40,7 +40,6 @@ const authSlice = createSlice({
       state.error = null;
     });
     builder.addCase(actAuthLogin.fulfilled, (state, action) => {
-      console.log("payload", action.payload);
       state.loading = "succeeded";
       state.user = action.payload.user;
       state.modified_email = action.payload.modified_email;

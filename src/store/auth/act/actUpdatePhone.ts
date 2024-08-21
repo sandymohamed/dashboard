@@ -21,7 +21,6 @@ const actUpdatePhone = createAsyncThunk("auth/actUpdatePhone", async (formData: 
 
     const response = await axios.patch(url, data, config);
     
-    console.log('Patch Response:', response.data);
     return response.data;
   } catch (error) {
     return rejectWithValue(axiosErrorHandler(error));

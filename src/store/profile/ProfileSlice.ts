@@ -63,6 +63,6 @@ const profileSlice = createSlice({
 
 export const { removeProfile } = profileSlice.actions
 
-export { actGetUserProfile }
+export { actGetUserProfile, actUpdateUserProfile }
 
 export default profileSlice.reducer

@@ -32,8 +32,6 @@ const MiniCalendar = ({
 
   const { isPhone } = useResponsive();
 
-  console.log("from mini calendar events", events);
-
   const goToNextMonth = () => handleDateChange(addMonths(currentDate, 1));
   const goToPrevMonth = () => handleDateChange(subMonths(currentDate, 1));
 

@@ -23,8 +23,6 @@ const PhoneNumber = () => {
 
   const onSubmit: SubmitHandler<TPhone> = (data) => {
     data["token"] = user?.token || "";
-    console.log('user from phone number', user);
-    console.log(data);
     dispatch(actUpdatePhone(data))
       .unwrap()
       .then(() => user?.user_type && navigate(`/${user.user_type.toLowerCase()}`));

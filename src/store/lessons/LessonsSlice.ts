@@ -8,6 +8,7 @@ import actGetLessonsByRange from "./act/actGetLessonsByRange";
 
 type TLessonsState = {
   lessons: TLesson[];
+  today_lessons?: TLesson[];
   count?: number;
   next?: string | null;
   previous?: string | null;
@@ -73,10 +74,9 @@ const lessonsSlice = createSlice({
 
     builder.addCase(actGetLessons.fulfilled, (state, action) => {
       state.loading = "succeeded";
-      state.lessons = action.payload.results;
+      state.today_lessons = action.payload.results;
       state.next = action.payload.next;
       state.previous = action.payload.previous;
-      console.log("action.palyoad", action.payload);
       if ("students" in action.payload) {
         state.students = action.payload.students as Array<{
           student_id: number;

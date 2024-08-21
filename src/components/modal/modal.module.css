@@ -1,0 +1,126 @@
+.modal {
+  font-family: "Tajawal", sans-serif;
+  margin: auto;
+  border: none;
+  outline: none;
+  border-radius: 1.6rem;
+  width: 720px;
+  max-width: 100%;
+  animation: slide-down-fade-in 300ms ease-out forwards;
+}
+
+.modal header {
+  background-color: var(--main-color);
+  padding: 1.6rem;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal header svg {
+  cursor: pointer;
+}
+
+.modal section {
+  padding: 2.4rem;
+  background-color: #fff;
+}
+
+.modal form {
+  display: grid;
+  gap: 1rem;
+}
+
+.questionBox {
+  text-align: center;
+  color: var(--secondary-color);
+}
+
+.questionBox h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.answers {
+  display: flex;
+  gap: 1.6rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+
+.answers label {
+  font-size: 1.4rem;
+  font-weight: 500;
+  background-color: #fff;
+  border-radius: 0.8rem;
+  padding: 0.8rem 1.6rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.answers label input {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.answers label:has(input[type="checkbox"]) {
+  box-shadow: 0px 5px 15px 0px #00000026;
+}
+
+@media (max-width: 991px) {
+  .answers label:has(input[type="checkbox"]) {
+    min-width: 100%;
+  }
+}
+
+
+.answers label:has(input:checked) {
+  background-color: var(--main-color);
+  color: #fff;
+}
+
+.answers .rateLabel:has(input:checked) {
+  background-color: var(--main-color);
+}
+
+.answers textarea {
+  border: 1.5px solid #EBEBEB;
+  border-radius: 0.4rem;
+  padding: 1.2rem 1.6rem;
+  width: 100%;
+  max-width: 100%;
+  min-height: 15rem;
+  resize: none;
+  outline: none;
+  font-family: inherit;
+  font-size: 1.6rem;
+}
+
+.modal button[type="submit"] {
+  background-color: var(--main-color);
+  color: #fff;
+  padding: 1.2rem 1.6rem;
+  border-radius: 999px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  min-width: 255px;
+  text-align: center;
+  display: block;
+  margin-inline: auto;
+}
+
+@keyframes slide-down-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

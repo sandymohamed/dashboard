@@ -29,6 +29,11 @@ export const LessonSchema = z.object({
   location_id: z.number(),
   employee_id: z.number(),
   service_id: z.number(),
+  participants: z.record(z.number(), z.object({
+    student_name: z.string(),
+    start_time_student: z.string().nullable(),
+    end_time_student: z.string().nullable(),
+  }))
 });
 
 export type TLesson = z.infer<typeof LessonSchema>;

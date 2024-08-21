@@ -16,12 +16,13 @@ type TLessonsResponse =
   | TTeacherResponse;
 
 type TGetLessonsPrams = {
-  token: string;
-  next?: string;
+  token: string | undefined;
+  from_date?: string | undefined;
+  next?: string | null;
 }
 
 
-const actGetLessons = createAsyncThunk('lessons/actGetLessons', async ({token, next}: TGetLessonsPrams, thunkAPI) => {
+const actGetLessons = createAsyncThunk('lessons/actGetLessons', async ({token, next, from_date}: TGetLessonsPrams, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
 
   try {
@@ -32,10 +33,12 @@ const actGetLessons = createAsyncThunk('lessons/actGetLessons', async ({token, n
     const config = {
       headers: {
         'Authorization': `Token ${token}`
+      },
+      params: {
+        from_date
       }
     };
     const response = await axios.get<TLessonsResponse>(url, config);
-    console.log('from get lesson', response.data)
     return response.data
   } catch (error) {
     return rejectWithValue(axiosErrorHandler(error));

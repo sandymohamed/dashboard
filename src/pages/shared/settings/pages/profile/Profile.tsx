@@ -4,8 +4,7 @@ import { UploadPhoto } from "@/components";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ProfileSchema, TProfile } from "@/validations/ProfileSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import actUpdateUserProfile from "@/store/profile/act/actUpdateUserProfile";
-import { actGetUserProfile } from "@/store/profile/ProfileSlice";
+import { actGetUserProfile, actUpdateUserProfile } from "@/store/profile/ProfileSlice";
 
 const { form, row, group, content } = styles;
 
@@ -15,7 +14,7 @@ const Profile = () => {
 
   const dispatch = useAppDispatch();
 
-  const { register, handleSubmit, setValue } = useForm<TProfile>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<TProfile>({
     defaultValues: {
       first_name: user?.first_name,
       last_name: user?.last_name,
@@ -28,14 +27,16 @@ const Profile = () => {
     resolver: zodResolver(ProfileSchema),
   });
 
+  console.log('errors', errors);
+
   const onSubmit: SubmitHandler<TProfile> = (data) => {
-    console.log('you clicked submit');
     dispatch(actUpdateUserProfile({ formData: data, token: authUser?.token }))
       .unwrap()
       .then(() => {
         dispatch(actGetUserProfile(authUser?.token));
       });
   };
+
 
   return (
     <section className={content}>
@@ -51,6 +52,7 @@ const Profile = () => {
             <label htmlFor="firstName">الاسم الأول</label>
             <input type="text" id="firstName" {...register("first_name")} />
           </div>
+
           <div className={group}>
             <label htmlFor="lastName">الاسم الأخير</label>
             <input type="text" id="lastName" {...register("last_name")} />
@@ -90,6 +92,8 @@ const Profile = () => {
         </section>
 
         <button type="submit" disabled={loading === 'pending'}>{loading === 'pending' ? "جاري الحفظ..." : "حفظ"}</button>
+        {/* <input type="submit" value="حفظ" onClick={() => console.log('you click')} /> */}
+        {loading === 'failed' && <p className="error" style={{ marginTop: "1rem" }}>لم يتم الحفظ</p>}
       </form>
     </section>
   );
