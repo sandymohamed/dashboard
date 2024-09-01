@@ -13,7 +13,6 @@ import { actGetUserProfile } from "@/store/profile/ProfileSlice";
 import { actGetReviewQuestions } from "@/store/review-questions/reviewSlice";
 import actFCMLogin from "@/store/FCM/act/actFCMLogin";
 import { useFirebaseMessaging } from "@/hooks";
-import actGetLessons from "@/store/lessons/act/actGetLessons";
 import { endOfMonth, format, startOfMonth } from "date-fns";
 import actGetLessonsByRange from "@/store/lessons/act/actGetLessonsByRange";
 

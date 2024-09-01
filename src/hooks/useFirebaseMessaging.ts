@@ -2,8 +2,8 @@
 import { useEffect, useState } from "react";
 import { messaging } from "../../firebase-config";
 import { getToken } from "firebase/messaging";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import actFCMLogin from "@/store/FCM/act/actFCMLogin";
+// import { useAppDispatch, useAppSelector } from "@/store/hooks";
+// import actFCMLogin from "@/store/FCM/act/actFCMLogin";
 
 const useFirebaseMessaging = () => {
   const [fcmToken, setFcmToken] = useState<string>();

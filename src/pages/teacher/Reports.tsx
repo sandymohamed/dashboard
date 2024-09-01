@@ -9,10 +9,8 @@ import ClockIcon from "@/assets/clock.svg?react";
 
 import styles from "./reports.module.css";
 import { useCallback, useEffect, useState } from "react";
-import { TLesson } from "@/validations/LessonSchema";
 import formatDaysAndMonths from "@/utils/formatDaysAndMonths";
 import formatHoursAndMinutes from "@/utils/formatHoursAndMinutes";
-import actGetLessonsByRange from "@/store/lessons/act/actGetLessonsByRange";
 import actGetLessonsByStatus from "@/store/lessons/act/actGetLessonsByStatus";
 import { TLessonStatus } from "@/types/shared";
 

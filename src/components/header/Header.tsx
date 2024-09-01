@@ -7,7 +7,7 @@ import { useResponsive } from "@/hooks";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useContext } from "react";
 import { SidebarContext } from "@/store/context/SidebarContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import actGetNotifications from "@/store/notifications/act/actGetNotifications";
 import LoadingIndicator from "../loadingIndicator/LoadingIndicator";
 

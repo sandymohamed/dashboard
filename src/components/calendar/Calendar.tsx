@@ -7,13 +7,12 @@ import arLocale from "@fullcalendar/core/locales/ar";
 import Sidebar from "./sideBar/SideBar";
 
 import "./calendar.css";
-import { useCallback, useContext, useEffect, useState } from "react";
-import { DatesSetArg, EventContentArg } from "@fullcalendar/core/index.js";
+import { useCallback, useContext } from "react";
+import { EventContentArg } from "@fullcalendar/core/index.js";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import actGetLessonsByRange from "@/store/lessons/act/actGetLessonsByRange";
 import { useResponsive } from "@/hooks";
 import { SidebarContext } from "@/store/context/SidebarContext";
-import actGetLessons from "@/store/lessons/act/actGetLessons";
 
 export type TEvent = {
   id: string;
