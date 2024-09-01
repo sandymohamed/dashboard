@@ -14,7 +14,7 @@ const Profile = () => {
 
   const dispatch = useAppDispatch();
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<TProfile>({
+  const { register, handleSubmit, setValue } = useForm<TProfile>({
     defaultValues: {
       first_name: user?.first_name,
       last_name: user?.last_name,
