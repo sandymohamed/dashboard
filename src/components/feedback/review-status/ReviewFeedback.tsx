@@ -44,8 +44,6 @@ const ReviewFeedback = forwardRef(({ status, error }: { status: "succeeded" | "f
     }
   }
 
-  console.log('from feedback', error);
-
   return createPortal(
     <dialog ref={dialog} className={`modal ${reviewModal}`}>
       {contentForStatus[status].icon}

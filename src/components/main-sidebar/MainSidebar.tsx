@@ -45,7 +45,6 @@ const MainSidebar = ({ data }: TSidebarProps) => {
     dispatch(logout());
     dispatch(removeProfile());
     if (fcmToken) {
-      console.log('from sidebar');
       dispatch(
         actFCMLogout({ user_token: authUser?.token, FCM_token: fcmToken })
       );

@@ -27,8 +27,6 @@ const Profile = () => {
     resolver: zodResolver(ProfileSchema),
   });
 
-  console.log('errors', errors);
-
   const onSubmit: SubmitHandler<TProfile> = (data) => {
     dispatch(actUpdateUserProfile({ formData: data, token: authUser?.token }))
       .unwrap()

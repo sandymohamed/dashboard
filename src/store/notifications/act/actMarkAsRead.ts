@@ -24,8 +24,7 @@ const actMarkAsRead = createAsyncThunk(
         },
       };
 
-      const response = await axios.get(url, config);
-      console.log(response.data);
+      await axios.get(url, config);
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));
     }

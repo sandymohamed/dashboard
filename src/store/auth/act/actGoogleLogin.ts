@@ -27,8 +27,6 @@ const actGoogleLogin = createAsyncThunk(
           id_token: credential,
         }
       );
-
-      console.log('from google action', response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));

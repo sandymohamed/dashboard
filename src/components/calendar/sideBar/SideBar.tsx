@@ -34,7 +34,6 @@ const Sidebar = ({ firstDayOfWeek }: TSidebarProps) => {
   };
 
   const { clickedEvent, currentEvents: events } = useContext(SidebarContext);
-  console.log(events)
 
   const { isPhone } = useResponsive();
 

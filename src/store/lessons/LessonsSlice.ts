@@ -120,7 +120,6 @@ const lessonsSlice = createSlice({
     });
 
     builder.addCase(actGetLessonsByRange.fulfilled, (state, action) => {
-      console.log("from get by range", action.payload);
       state.loading = "succeeded";
       state.calendar_lessons = action.payload;
     });

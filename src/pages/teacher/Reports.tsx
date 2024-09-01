@@ -35,10 +35,6 @@ const TeacherReportsPage = () => {
 
   const dispatch = useAppDispatch();
 
-  if (next !== null) {
-    console.log("from reports", next);
-  }
-
   const CARDS = [
     {
       id: 1,
