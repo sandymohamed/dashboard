@@ -5,10 +5,16 @@ import { TLoading } from "@/types/shared";
 import actGetLessons from "./act/actGetLessons";
 import { isString } from "@/types/gurads";
 import actGetLessonsByRange from "./act/actGetLessonsByRange";
-
+import actGetLessonsByDay from "./act/actGetLessonsByDay";
+import actGetLessonsByStatus from "./act/actGetLessonsByStatus";
+import actJoinLesson from "./act/actJoinLesson";
 type TLessonsState = {
-  lessons: TLesson[];
-  today_lessons?: TLesson[];
+  calendar_lessons: TLesson[];
+  today_lessons: TLesson[];
+  all_lessons: TLesson[];
+  status_lessons: TLesson[];
+  attendance_link: string;
+  end_attendance_link: string;
   count?: number;
   next?: string | null;
   previous?: string | null;
@@ -47,7 +53,12 @@ type TLessonsState = {
 };
 
 const initialState: TLessonsState = {
-  lessons: [],
+  calendar_lessons: [],
+  all_lessons: [],
+  today_lessons: [],
+  status_lessons: [],
+  attendance_link: "",
+  end_attendance_link: "",
   count: 0,
   next: null,
   previous: null,
@@ -74,7 +85,12 @@ const lessonsSlice = createSlice({
 
     builder.addCase(actGetLessons.fulfilled, (state, action) => {
       state.loading = "succeeded";
-      state.today_lessons = action.payload.results;
+      // if (action.meta.arg.from_date) {
+      //   console.log('from get today', action.payload);
+      //   state.today_lessons = action.payload.results;
+      // } else {
+      state.all_lessons = action.payload.results;
+      // }
       state.next = action.payload.next;
       state.previous = action.payload.previous;
       if ("students" in action.payload) {
@@ -104,8 +120,9 @@ const lessonsSlice = createSlice({
     });
 
     builder.addCase(actGetLessonsByRange.fulfilled, (state, action) => {
+      console.log("from get by range", action.payload);
       state.loading = "succeeded";
-      state.lessons = action.payload;
+      state.calendar_lessons = action.payload;
     });
 
     builder.addCase(actGetLessonsByRange.rejected, (state, action) => {
@@ -114,6 +131,57 @@ const lessonsSlice = createSlice({
         state.error = action.payload;
       }
     });
+
+    // Lessons By Day
+    builder.addCase(actGetLessonsByDay.pending, (state) => {
+      state.loading = "pending";
+      state.error = null;
+    });
+
+    builder.addCase(actGetLessonsByDay.fulfilled, (state, action) => {
+      state.loading = "succeeded";
+      state.today_lessons = action.payload;
+    });
+
+    builder.addCase(actGetLessonsByDay.rejected, (state, action) => {
+      state.loading = "failed";
+      if (isString(action.payload)) {
+        state.error = action.payload;
+      }
+    });
+
+    // Lessons By Status
+    builder.addCase(actGetLessonsByStatus.pending, (state) => {
+      state.loading = "pending";
+      state.error = null;
+    });
+
+    builder.addCase(actGetLessonsByStatus.fulfilled, (state, action) => {
+      state.loading = "succeeded";
+      state.status_lessons = action.payload.results;
+      state.next = action.payload.next;
+      state.previous = action.payload.previous;
+    });
+
+    builder.addCase(actGetLessonsByStatus.rejected, (state, action) => {
+      state.loading = "failed";
+      if (isString(action.payload)) {
+        state.error = action.payload;
+      }
+    }); 
+
+    // join lessons
+    builder.addCase(actJoinLesson.pending, (state) => {
+      state.loading = "pending";
+      state.error = null;
+    });
+
+    builder.addCase(actJoinLesson.rejected, (state, action) => {
+      state.loading = "failed";
+      if (isString(action.payload)) {
+        state.error = action.payload;
+      }
+    })
   },
 });
 

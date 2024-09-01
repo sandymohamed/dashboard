@@ -1,15 +1,9 @@
-.modal {
-  font-family: "Tajawal", sans-serif;
-  margin: auto;
-  border: none;
-  outline: none;
-  border-radius: 1.6rem;
+.reviewForm {
   width: 720px;
   max-width: 100%;
-  animation: slide-down-fade-in 300ms ease-out forwards;
 }
 
-.modal header {
+.reviewForm header {
   background-color: var(--main-color);
   padding: 1.6rem;
   color: #fff;
@@ -19,16 +13,16 @@
   gap: 1rem;
 }
 
-.modal header svg {
+.reviewForm header svg {
   cursor: pointer;
 }
 
-.modal section {
+.reviewForm section {
   padding: 2.4rem;
   background-color: #fff;
 }
 
-.modal form {
+.reviewForm form {
   display: grid;
   gap: 1rem;
 }
@@ -101,7 +95,7 @@
   font-size: 1.6rem;
 }
 
-.modal button[type="submit"] {
+.reviewForm button[type="submit"] {
   background-color: var(--main-color);
   color: #fff;
   padding: 1.2rem 1.6rem;
@@ -114,13 +108,8 @@
   margin-inline: auto;
 }
 
-@keyframes slide-down-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(-3rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.reviewForm button[type="submit"][disabled] {
+  background-color: #A0A1A7;
+  cursor: not-allowed;
 }
+

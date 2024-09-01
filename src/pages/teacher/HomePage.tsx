@@ -1,6 +1,5 @@
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import actGetLessons from "@/store/lessons/act/actGetLessons";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CalendarIconForCard from "@/assets/calendarForCard.svg?react";
 import ClockIcon from "@/assets/clock.svg?react";
 import FlagIcon from "@/assets/flag.svg?react";
@@ -8,15 +7,25 @@ import BulbIcon from "@/assets/light-bulb.svg?react";
 import FolderIcon from "@/assets/folder-open.svg?react";
 
 import styles from "./homePage.module.css";
-import formatArabicDate from "@/utils/formatArabicDate";
+import formatDaysAndMonths from "@/utils/formatDaysAndMonths";
 import formatHoursAndMinutes from "@/utils/formatHoursAndMinutes";
-import { Modal } from "@/components";
-import { TModalRef } from "@/components/modal/Modal";
+import { ReviewForm } from "@/components";
+import { TModalRef } from "@/types/shared"; 
+import actGetLessonsByDay from "@/store/lessons/act/actGetLessonsByDay";
+import actJoinLesson from "@/store/lessons/act/actJoinLesson";
 
-const { classBox, classes_container, attendance_status, action_btn } = styles;
+const {
+  classBox,
+  classes_container,
+  attendance_status,
+  action_btn,
+  join_error,
+} = styles;
 const TeacherHomePage = () => {
   const { user } = useAppSelector((state) => state.auth);
-  const { today_lessons } = useAppSelector((state) => state.lessons);
+  const { today_lessons, error, loading } = useAppSelector(
+    (state) => state.lessons
+  );
   const [id, setId] = useState<number>();
 
   const dispatch = useAppDispatch();
@@ -24,7 +33,7 @@ const TeacherHomePage = () => {
   const today = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
-    dispatch(actGetLessons({ token: user?.token, from_date: today }));
+    dispatch(actGetLessonsByDay({ token: user?.token, from_date: today }));
   }, [dispatch, user?.token, today]);
 
   const dialogRef = useRef<TModalRef>(null);
@@ -35,7 +44,7 @@ const TeacherHomePage = () => {
 
   return (
     <>
-      <Modal ref={dialogRef} lesson_id={id} />
+      <ReviewForm ref={dialogRef} lesson_id={id} />
       <p className={styles.greeting}>
         مرحبا{" "}
         <span>
@@ -51,10 +60,10 @@ const TeacherHomePage = () => {
             onClick={() => setId(lesson.id)}
           >
             <section>
-            <h4>الطالب: {lesson.participants[0].student_name}</h4>
+              <h4>الطالب: {lesson.participants[0].student_name}</h4>
               <div>
                 <CalendarIconForCard />
-                <span>{formatArabicDate(lesson.from_date)}</span>
+                <span>{formatDaysAndMonths(lesson.from_date)}</span>
               </div>
               <div>
                 <ClockIcon style={{ stroke: "var(--secondary-color)" }} />
@@ -63,12 +72,12 @@ const TeacherHomePage = () => {
                   {formatHoursAndMinutes(lesson.to_datetime)}
                 </span>
               </div>
-              
+              {/* <a href={lesson.attendance_link}>انضم الآن</a> */}
             </section>
 
             <section>
               <div>
-                <BulbIcon />
+                <BulbIcon style={{ stroke: "#1C8A44" }} />
                 <span
                   onClick={openModal}
                   style={{ color: "var(--main-color)", cursor: "pointer" }}
@@ -89,8 +98,23 @@ const TeacherHomePage = () => {
                 <FolderIcon />
                 <span>عرض الملفات</span>
               </button>
-              <span className={attendance_status}>تم الحضور</span>
+              <span
+                onClick={() => {
+                  dispatch(
+                    actJoinLesson({
+                      token: user?.token,
+                      attendance_link: lesson.attendance_link,
+                    })
+                  );
+                }}
+                rel="noopener noreferrer"
+                className={attendance_status}
+                style={{ cursor: "pointer" }}
+              >
+                {loading === "pending" ? "جاري الانضمام" : "انضم الان"}
+              </span>
             </section>
+            {error && <span className={`error ${join_error}`}>{error}</span>}
           </article>
         ))}
         {today_lessons?.length === 0 && <h4>ليس لديك حصص هذا اليوم</h4>}

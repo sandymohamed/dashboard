@@ -14,12 +14,13 @@ import auth from "./auth/authSlice";
 import lessons from "./lessons/LessonsSlice";
 import profile from "./profile/ProfileSlice";
 import reviewQuestions from "./review-questions/reviewSlice";
+import notifications from "./notifications/NotificationsSlice";
 
-const rootPersistConfig = {
-  key: 'root',
-  storage,
-  whitelist: ["lessons", "auth", 'profile', 'reviewQuestions'],
-}
+// const rootPersistConfig = {
+//   key: 'root',
+//   storage,
+//   whitelist: ["lessons", "auth", 'profile', 'reviewQuestions'],
+// }
 
 const reviewQuestionsPersistConfig = {
   key: 'reviewQuestions',
@@ -30,13 +31,13 @@ const reviewQuestionsPersistConfig = {
 const lessonsPersistConfig = {
   key: 'lessons',
   storage,
-  whitelist: ["lessons"],
+  whitelist: ["calendar_lessons"],
 }
 
 const profilePersistConfig = {
   key: 'profile',
   storage,
-  whitelist: ["user"],
+  whitelist: ["user", "statistics"],
 }
 
 const authPersistConfig = {
@@ -50,12 +51,13 @@ const rootReducer = combineReducers({
   lessons: persistReducer(lessonsPersistConfig, lessons),
   profile: persistReducer(profilePersistConfig, profile),
   reviewQuestions: persistReducer(reviewQuestionsPersistConfig, reviewQuestions),
+  notifications
 })
 
-const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
+// const persistedReducer = persistReducer(rootPersistConfig, rootReducer);
 
 const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

@@ -2,6 +2,7 @@ import {
   addMonths,
   format,
   isSameDay,
+  isToday,
   subMonths,
 } from "date-fns";
 import { ar } from "date-fns/locale";
@@ -80,7 +81,7 @@ const MiniCalendar = ({
           <div
             key={day.toISOString()}
             className={`${styles.day} ${
-              clickedEvent && isSameDay(day, clickedEvent) ? styles.active : ""
+              clickedEvent && isSameDay(day, clickedEvent) || isToday(day) ? styles.active : ""
             } ${
               day.getMonth() !== currentDate.getMonth()
                 ? styles.other_month

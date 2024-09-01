@@ -26,6 +26,7 @@ import { FamilyHomePage, FamilyNotesPage } from "@/pages/family";
 import {
   CalendarPage,
   HelpPage,
+  NotificationsPage,
   Profile,
   Roles,
   Security,
@@ -269,10 +270,6 @@ const router = createBrowserRouter([
         index: true,
         element: <TeacherHomePage />,
       },
-      // {
-      //   path: 'rate',
-      //   element: <Rate />
-      // },
       {
         path: "classes",
         element: <TeacherClassesPage />,
@@ -303,6 +300,10 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: 'notifications',
+        element: <NotificationsPage />
+      }
     ],
   },
 

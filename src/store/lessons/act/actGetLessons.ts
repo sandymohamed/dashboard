@@ -22,7 +22,7 @@ type TGetLessonsPrams = {
 }
 
 
-const actGetLessons = createAsyncThunk('lessons/actGetLessons', async ({token, next, from_date}: TGetLessonsPrams, thunkAPI) => {
+const actGetLessons = createAsyncThunk('lessons/actGetLessons', async ({token, next}: TGetLessonsPrams, thunkAPI) => {
   const { rejectWithValue } = thunkAPI;
 
   try {
@@ -33,9 +33,6 @@ const actGetLessons = createAsyncThunk('lessons/actGetLessons', async ({token, n
     const config = {
       headers: {
         'Authorization': `Token ${token}`
-      },
-      params: {
-        from_date
       }
     };
     const response = await axios.get<TLessonsResponse>(url, config);

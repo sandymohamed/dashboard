@@ -6,7 +6,12 @@ type TFirstDayOfWeek =  0 | 1 | 2 | 3 | 4 | 5 | 6;
 
 type TUserRole = 'Admin' | 'Student' | 'Teacher' | 'Family' | undefined;
 
-
+type TLessonStatus = 
+  | "Scheduled"
+  | "Attended"
+  | "Missed"
+  | "Progressing"
+  | "Canceled"
 
 type TPath = {
   title: string;
@@ -15,4 +20,9 @@ type TPath = {
   phone_icon: React.ReactNode;
 }
 
-export type { TLoading, TFirstDayOfWeek, TUserRole, TPath }
+type TModalRef = {
+  open: () => void;
+  close: () => void;
+};
+
+export type { TLoading, TFirstDayOfWeek, TUserRole, TPath, TLessonStatus, TModalRef }

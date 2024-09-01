@@ -1,17 +1,24 @@
 import { TLoading } from "@/types/shared";
-import { TUser } from "@/types/User";
+import { TUser, TUserStatistics } from "@/types/User";
 import { createSlice } from "@reduxjs/toolkit";
 import actGetUserProfile from "./act/actGetUserProfile";
 import { isString } from "@/types/gurads";
 import actUpdateUserProfile from "./act/actUpdateUserProfile";
 type TProfileState = {
   loading: TLoading,
+  statistics: TUserStatistics,
   error: string | null,
   user: TUser | null
 }
 
 const initialState: TProfileState = {
   user: null,
+  statistics: {
+    total_lessons: 0,
+    total_attended: 0,
+    total_scheduled: 0,
+    total_missed: 0
+  },
   loading: "idle",
   error: null,
 }
@@ -33,6 +40,7 @@ const profileSlice = createSlice({
     builder.addCase(actGetUserProfile.fulfilled, (state, action) => {
       state.loading = "succeeded"
       state.user = action.payload.user
+      state.statistics = action.payload.statistics
     }),
 
     builder.addCase(actGetUserProfile.rejected, (state, action) => {

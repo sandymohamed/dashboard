@@ -7,14 +7,13 @@ import arLocale from "@fullcalendar/core/locales/ar";
 import Sidebar from "./sideBar/SideBar";
 
 import "./calendar.css";
-import { useCallback, useContext } from "react";
-import {
-  EventContentArg,
-} from "@fullcalendar/core/index.js";
+import { useCallback, useContext, useEffect, useState } from "react";
+import { DatesSetArg, EventContentArg } from "@fullcalendar/core/index.js";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import actGetLessonsByRange from "@/store/lessons/act/actGetLessonsByRange";
 import { useResponsive } from "@/hooks";
 import { SidebarContext } from "@/store/context/SidebarContext";
+import actGetLessons from "@/store/lessons/act/actGetLessons";
 
 export type TEvent = {
   id: string;
@@ -31,16 +30,13 @@ export type TEvent = {
 const Calendar = () => {
   const dispatch = useAppDispatch();
 
-  const { lessons } = useAppSelector((state) => state.lessons);
+  const { calendar_lessons } = useAppSelector((state) => state.lessons);
+  // console.log('from calendar',lessons);
 
   const { user } = useAppSelector((state) => state.auth);
 
-  const {
-    calendarRef,
-    setCurrentDate,
-    setClickedEvent,
-    setCurrentEvents,
-  } = useContext(SidebarContext);
+  const { calendarRef, setCurrentDate, setClickedEvent, setCurrentEvents } =
+    useContext(SidebarContext);
 
   const { isPhone } = useResponsive();
 
@@ -68,7 +64,6 @@ const Calendar = () => {
     );
   };
 
-
   const fetchEvents = useCallback(
     async (
       info: { start: Date; end: Date },
@@ -77,7 +72,7 @@ const Calendar = () => {
       const startStr = info.start.toISOString().split("T")[0];
       const endStr = info.end.toISOString().split("T")[0];
 
-      const events = lessons.map((event) => ({
+      const events = calendar_lessons.map((event) => ({
         id: event.id.toString(),
         title: event.name,
         start: event.from_datetime,
@@ -105,7 +100,7 @@ const Calendar = () => {
               start_date: startStr,
               end_date: endStr,
             })
-          ).unwrap();
+          )
         } catch (error) {
           console.error("Error fetching events:", error);
         }
@@ -120,6 +115,7 @@ const Calendar = () => {
 
       successCallback(eventsInRange);
     },
+    // if you add calendar_lessons in dependencies array, it will get into an infinite loop
     [dispatch, user?.token, setCurrentEvents]
   )
 
@@ -138,13 +134,14 @@ const Calendar = () => {
             left: "prev,next today",
             right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
-          height={'auto'}
+          height={"auto"}
           events={fetchEvents}
           ref={calendarRef}
           dateClick={(info) => {
             setCurrentDate(info.date);
             setClickedEvent(info.date);
           }}
+          slotMinTime="08:00:00"
         />
       </div>
       <Sidebar firstDayOfWeek={1} />

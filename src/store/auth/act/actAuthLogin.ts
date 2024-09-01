@@ -29,7 +29,7 @@ const actAuthLogin = createAsyncThunk(
         "https://elmadrasah-development-ff14bf466889.herokuapp.com/user/login/",
         formData
       );
-
+      console.log('from regular login', response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));

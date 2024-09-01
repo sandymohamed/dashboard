@@ -31,6 +31,8 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.user = null;
+      state.error = null;
+      state.loading = "idle";
     },
   },
   extraReducers: (builder) => {
@@ -63,6 +65,8 @@ const authSlice = createSlice({
         first_name: action.payload.first_name,
         last_name: action.payload.last_name,
         token: action.payload.token,
+        phone: action.payload.phone,
+        user_type: action.payload.user_type,
       };
     });
     builder.addCase(actGoogleLogin.rejected, (state, action) => {

@@ -10,4 +10,13 @@ export type TUser = {
     date_joined: string;
     message: string;
     status: number;
+    new_notification: number;
+};
+
+
+export type TUserStatistics = {
+    total_lessons: number;
+    total_attended: number;
+    total_scheduled: number;
+    total_missed: number;
 };

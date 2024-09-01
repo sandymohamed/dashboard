@@ -11,13 +11,24 @@ import { actAuthLogin, actGoogleLogin } from "@/store/auth/authSlice";
 import { GoogleLogin } from "@react-oauth/google";
 import { actGetUserProfile } from "@/store/profile/ProfileSlice";
 import { actGetReviewQuestions } from "@/store/review-questions/reviewSlice";
+import actFCMLogin from "@/store/FCM/act/actFCMLogin";
+import { useFirebaseMessaging } from "@/hooks";
+import actGetLessons from "@/store/lessons/act/actGetLessons";
+import { endOfMonth, format, startOfMonth } from "date-fns";
+import actGetLessonsByRange from "@/store/lessons/act/actGetLessonsByRange";
 
 const Login = () => {
   const { loading, error } = useAppSelector((state) => state.auth);
 
+  const { fcmToken } = useFirebaseMessaging();
+
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
+
+  const today = new Date();
+  const startDate = startOfMonth(today);
+  const endDate = endOfMonth(today);
 
   const { loginBox, loginWithBox, actionsBox, hide } = styles;
 
@@ -36,13 +47,27 @@ const Login = () => {
         if (data.set_password_url) {
           navigate(`/set-password`);
         } else {
-          if (data.user?.phone === "None") {
+          if (data.user?.phone === null) {
             navigate("/set-phoneNumber");
             return;
           }
           dispatch(actGetUserProfile(data.user.token));
           dispatch(actGetReviewQuestions(data.user.token));
-          navigate(`/${data.user?.user_type?.toLowerCase()}`, { replace: true });
+          dispatch(
+            actGetLessonsByRange({
+              token: data.user.token,
+              start_date: format(startDate, "yyyy-MM-dd"),
+              end_date: format(endDate, "yyyy-MM-dd"),
+            })
+          );
+          if (fcmToken) {
+            dispatch(
+              actFCMLogin({ user_token: data.user.token, FCM_token: fcmToken })
+            );
+          }
+          navigate(`/${data.user?.user_type?.toLowerCase()}`, {
+            replace: true,
+          });
         }
       });
   };
@@ -51,12 +76,15 @@ const Login = () => {
     dispatch(actGoogleLogin(credential))
       .unwrap()
       .then((data) => {
-        if (data.phone === "None") {
-          navigate("/set-phoneNumber");
-          return;
+        // if (data.phone === 'None') {
+        //   navigate("/set-phoneNumber");
+        //   return;
+        // }
+        if (data.user_type && data.phone) {
+          navigate(`/${data.user_type?.toLowerCase()}`, { replace: true });
+        } else {
+          alert("you are not registered yet");
         }
-
-        navigate(`/Admin`);
       });
   };
 

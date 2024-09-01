@@ -1,4 +1,5 @@
-import { TEnteredData } from "@/components/modal/Modal";
+
+import { TEnteredData } from "@/components/review-form/ReviewForm";
 import axiosErrorHandler from "@/utils/axiosErrorHandler";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";

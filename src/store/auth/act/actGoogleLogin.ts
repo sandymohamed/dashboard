@@ -1,3 +1,4 @@
+import { TUserRole } from "@/types/shared";
 import axiosErrorHandler from "@/utils/axiosErrorHandler";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -10,6 +11,7 @@ type TGoogleLoginResponse = {
   message: string;
   phone: string;
   token: string;
+  user_type: TUserRole;
 };
 
 const actGoogleLogin = createAsyncThunk(
@@ -25,6 +27,8 @@ const actGoogleLogin = createAsyncThunk(
           id_token: credential,
         }
       );
+
+      console.log('from google action', response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(axiosErrorHandler(error));

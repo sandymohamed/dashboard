@@ -12,6 +12,7 @@
   grid-template-columns: 300px 1fr 300px;
   gap: 1.6rem;
   align-items: center;
+  position: relative;
 }
 
 @media (max-width: 991px) {
@@ -60,7 +61,6 @@
 .attendance_status {
   background-color: var(--main-color);
   color: #fff;
-  min-width: 105px;
   text-align: center;
   display: inline-block;
 }
@@ -74,4 +74,10 @@
 .greeting span {
   color: var(--main-color);
   font-size: 2.5rem;
+}
+
+.join_error {
+  position: absolute;
+  left: 1rem;
+  bottom: 0.5rem;
 }

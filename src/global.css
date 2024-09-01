@@ -8,6 +8,10 @@ html {
   font-size: 62.5%; /* 1rem = 10px */
 }
 
+body {
+  overflow-x: hidden;
+}
+
 button,
 input {
   outline: none;
@@ -37,10 +41,10 @@ menu {
 }
 
 :root {
-  --main-color: #1C8A44;
+  --main-color: #1c8a44;
   --secondary-color: #171717;
-  --gray-color: #6F6F6F;
-  --orange-color: #FFB72B;
+  --gray-color: #6f6f6f;
+  --orange-color: #ffb72b;
 }
 
 .container {
@@ -50,7 +54,6 @@ menu {
   font-size: 1.6rem;
   line-height: 1.5;
   color: var(--secondary-color);
-  
 }
 
 @supports (min-height: 100dvh) {
@@ -81,7 +84,7 @@ menu {
   display: flex;
   flex-direction: column;
 }
- 
+
 .content {
   padding: 3.2rem;
   /* padding-bottom: 0; */
@@ -98,14 +101,14 @@ menu {
 }
 
 .active {
-  background-color: #FFB72B;
+  background-color: #ffb72b;
   border-radius: 0.8rem;
   font-weight: 700;
 }
 
 .error {
   font-weight: 700;
-  color: red; 
+  color: red;
   font-size: 1.4rem;
 }
 
@@ -120,13 +123,12 @@ menu {
 }
 
 .css-1wc848c-MuiFormHelperText-root {
-  color: #d32f2f  !important;
+  color: #d32f2f !important;
   font-size: 1.8rem !important;
-  font-family: inherit  !important;
-  font-weight: 700  !important;
-  margin-top: 1rem  !important;
+  font-family: inherit !important;
+  font-weight: 700 !important;
+  margin-top: 1rem !important;
   text-align: right !important;
-
 }
 
 .css-1o9s3wi-MuiInputBase-input-MuiOutlinedInput-input {
@@ -168,4 +170,38 @@ menu {
 
 .nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-bN97Pc-sM5MNb {
   flex-direction: row-reverse !important;
+}
+
+.fc-direction-rtl .fc-timegrid-slot-label-frame {
+  text-align: center !important;
+}
+
+.loadingBox {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.modal {
+  font-family: "Tajawal", sans-serif;
+  margin: auto;
+  border: none;
+  outline: none;
+  border-radius: 1.6rem;
+  animation: slide-down-fade-in 300ms ease-out forwards;
+}
+
+@keyframes slide-down-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

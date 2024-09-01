@@ -8,7 +8,7 @@ import styles from "./MainSidebar.module.css";
 import { TPath } from "@/types/shared";
 import { useContext, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { useResponsive } from "@/hooks";
+import { useFirebaseMessaging, useResponsive } from "@/hooks";
 import {
   PH_helpIcon,
   PH_settingsIcon,
@@ -20,6 +20,7 @@ import {
 import { logout } from "@/store/auth/authSlice";
 import { removeProfile } from "@/store/profile/ProfileSlice";
 import { SidebarContext } from "@/store/context/SidebarContext";
+import actFCMLogout from "@/store/FCM/act/actFCMLogout";
 
 type TSidebarProps = {
   data: TPath[];
@@ -32,24 +33,37 @@ const MainSidebar = ({ data }: TSidebarProps) => {
   const { isPhone } = useResponsive();
 
   const { user } = useAppSelector((state) => state.profile);
+  const { user: authUser } = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
 
   const { isSidebarOpen, setIsSidebarOpen } = useContext(SidebarContext);
 
+  const { fcmToken } = useFirebaseMessaging();
+
   const signoutHandler = () => {
-    dispatch(logout())
+    dispatch(logout());
     dispatch(removeProfile());
-  }
+    if (fcmToken) {
+      console.log('from sidebar');
+      dispatch(
+        actFCMLogout({ user_token: authUser?.token, FCM_token: fcmToken })
+      );
+    }
+  };
 
   const closeSidebar = () => {
     setIsSidebarOpen(false);
-  }
+  };
 
   return (
     <aside
-      className={`${sidebar} ${isSidebarOpen ? open : ''}`}
-      style={isPhone ? undefined : { width: expanded ? "200px" : "85px", transition: "0.3s" }}
+      className={`${sidebar} ${isSidebarOpen ? open : ""}`}
+      style={
+        isPhone
+          ? undefined
+          : { width: expanded ? "200px" : "85px", transition: "0.3s" }
+      }
     >
       {isPhone ? (
         <>
@@ -64,7 +78,7 @@ const MainSidebar = ({ data }: TSidebarProps) => {
         <Logo className={logo} style={{ width: expanded ? "auto" : "70px" }} />
       )}
 
-      <nav >
+      <nav>
         <div className={arrow} onClick={() => setExpanded(!expanded)}>
           {expanded ? <CloseArrow /> : <OpenArrow />}
         </div>
@@ -114,7 +128,9 @@ const MainSidebar = ({ data }: TSidebarProps) => {
           </li>
         </menu>
         <div className={signout} onClick={signoutHandler}>
-          <div className="icon">{isPhone ? <PH_signoutIcon /> : <SignoutIcon />}</div>
+          <div className="icon">
+            {isPhone ? <PH_signoutIcon /> : <SignoutIcon />}
+          </div>
           <span
             className={expanded ? "" : collapse}
             style={{ opacity: expanded ? "1" : "0" }}

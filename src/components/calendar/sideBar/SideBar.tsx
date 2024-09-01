@@ -16,7 +16,7 @@ import { SidebarContext } from "@/store/context/SidebarContext";
 import { useResponsive } from "@/hooks";
 import { PH_calendarIcon, PH_teacherIcon } from "@/assets/nav-icons";
 import Clock from "@/assets/grayClock.svg?react";
-import formatArabicDate from "@/utils/formatArabicDate";
+import formatDaysAndMonths from "@/utils/formatDaysAndMonths";
 import formatHoursAndMinutes from "@/utils/formatHoursAndMinutes";
 
 type TSidebarProps = {
@@ -95,7 +95,7 @@ const Sidebar = ({ firstDayOfWeek }: TSidebarProps) => {
                       </div>
                       <div className="event__info--group">
                         <PH_calendarIcon />
-                        <span>{formatArabicDate(event.start)}</span>
+                        <span>{formatDaysAndMonths(event.start)}</span>
                       </div>
                       <div className="event__info--group">
                         <Clock />

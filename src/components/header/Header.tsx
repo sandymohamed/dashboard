@@ -4,36 +4,80 @@ import MenuIcon from "@/assets/menu.svg?react";
 import Bell from "@/assets/BellOutline.svg?react";
 import UserPhoto from "@/assets/profilePlaceholder.svg?react";
 import { useResponsive } from "@/hooks";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useContext } from "react";
 import { SidebarContext } from "@/store/context/SidebarContext";
+import { Link, useNavigate } from "react-router-dom";
+import actGetNotifications from "@/store/notifications/act/actGetNotifications";
+import LoadingIndicator from "../loadingIndicator/LoadingIndicator";
 
-const { header, wrapper, box, btn, badge, menuIcon, userPhoto, notifications, bell } = styles;
+const {
+  header,
+  wrapper,
+  box,
+  btn,
+  badge,
+  menuIcon,
+  userPhoto,
+  notifications,
+  bell,
+} = styles;
 const Header = () => {
-
-  const { setIsSidebarOpen } = useContext(SidebarContext)
+  const { setIsSidebarOpen } = useContext(SidebarContext);
 
   const { isPhone } = useResponsive();
 
+  const dispatch = useAppDispatch();
+
   const { user } = useAppSelector((state) => state.profile);
 
+  const { user: authUser } = useAppSelector((state) => state.auth);
+
+  const { loading } = useAppSelector((state) => state.notifications);
+
+  const navigate = useNavigate();
+
+  const getNotificationsHandler = () => {
+    dispatch(actGetNotifications({ token: authUser?.token }))
+      .unwrap()
+      .then(() => {
+        navigate("notifications");
+      });
+  };
+
   return (
-    <header className={header}>
-      <section className={wrapper}>
-        {isPhone && <Logo />}
-        <div className={box}>
-          {!isPhone && <button className={btn}>En</button>}
-          <div className={notifications}>
-            <Bell className={bell} />
-            <span className={badge}>1</span>
+    <>
+      {loading === "pending" && <div className="loadingBox">
+        <LoadingIndicator />
+      </div>}
+      <header className={header}>
+        <section className={wrapper}>
+          {isPhone && <Logo />}
+          <div className={box}>
+            {!isPhone && <button className={btn}>En</button>}
+            <div className={notifications} onClick={getNotificationsHandler}>
+              <Bell className={bell} />
+              <span className={badge}>{user?.new_notification || 0}</span>
+            </div>
+            {isPhone && (
+              <MenuIcon
+                className={menuIcon}
+                onClick={() => setIsSidebarOpen((prevState) => !prevState)}
+              />
+            )}
+            {!isPhone && (
+              <div className={userPhoto}>
+                {user?.image ? (
+                  <img src={user?.image} alt="Avatar" />
+                ) : (
+                  <UserPhoto />
+                )}
+              </div>
+            )}
           </div>
-          {isPhone && <MenuIcon className={menuIcon} onClick={() => setIsSidebarOpen(prevState => !prevState)} />}
-          {!isPhone && <div className={userPhoto}>
-            {user?.image ? <img src={user?.image} alt="Avatar" /> : <UserPhoto />}
-          </div>}
-        </div>
-      </section>
-    </header>
+        </section>
+      </header>
+    </>
   );
 };
 

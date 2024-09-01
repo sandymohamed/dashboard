@@ -1,21 +1,11 @@
+import { TUser, TUserStatistics } from "@/types/User";
 import axiosErrorHandler from "@/utils/axiosErrorHandler";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 type TUserProfileResponse = {
-  user: {
-    id: number,
-    first_name: string,
-    last_name: string,
-    email: string,
-    phone: string,
-    image: string,
-    gender: string,
-    birth_date: string,
-    date_joined: string,
-    message: string,
-    status: number
-  }
+  user: TUser,
+  statistics: TUserStatistics
 }
 
 const actGetUserProfile = createAsyncThunk(
