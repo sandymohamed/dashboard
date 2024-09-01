@@ -1,5 +1,5 @@
 import axiosErrorHandler from "@/utils/axiosErrorHandler";
-import getBaseUrl from "@/utils/getBaseUrl";
+// import getBaseUrl from "@/utils/getBaseUrl";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
